@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campaña Aniversario Junio 2026 — Matcha & CO</title>
+<style>
+  :root {
+    --green: #3B4F0E;
+    --green-light: #eef3e0;
+    --green-mid: #a8be6a;
+    --dark: #1B1B1B;
+    --gray: #6B7280;
+    --gray-light: #faf9f7;
+    --warm: #705f5e;
+    --warm-light: #f5f0ef;
+    --orange: #c4773a;
+    --orange-light: #fdf0e6;
+    --white: #FFFFFF;
+    --radius: 12px;
+    --shadow: 0 2px 12px rgba(0,0,0,.07);
+    --border: #e5e7eb;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Inter',-apple-system,BlinkMacSystemFont,sans-serif; background:var(--gray-light); color:var(--dark); line-height:1.6; }
+
+  /* NAV */
+  .nav { position:sticky; top:0; z-index:100; background:var(--white); border-bottom:1px solid var(--border); padding:0 2rem; display:flex; align-items:center; gap:2rem; }
+  .nav-brand { font-weight:700; color:var(--green); font-size:1rem; padding:1rem 0; white-space:nowrap; }
+  .nav-tabs { display:flex; gap:0; overflow-x:auto; }
+  .nav-tab { padding:.85rem 1.1rem; font-size:.82rem; font-weight:500; color:var(--gray); cursor:pointer; border-bottom:2px solid transparent; transition:all .2s; white-space:nowrap; }
+  .nav-tab:hover { color:var(--green); }
+  .nav-tab.active { color:var(--green); border-bottom-color:var(--green); font-weight:700; }
+
+  /* PANELS */
+  .panel { display:none; max-width:1160px; margin:2rem auto; padding:0 1.5rem 4rem; }
+  .panel.active { display:block; }
+
+  /* HERO */
+  .hero { background:linear-gradient(135deg,var(--green) 0%,#5a7a1a 100%); color:white; border-radius:var(--radius); padding:2.5rem 3rem; margin-bottom:2rem; position:relative; overflow:hidden; }
+  .hero::before { content:'🎂'; position:absolute; right:2rem; top:50%; transform:translateY(-50%); font-size:5rem; opacity:.15; }
+  .hero h1 { font-size:1.9rem; margin-bottom:.4rem; }
+  .hero p { opacity:.85; font-size:1rem; }
+  .hero-meta { display:flex; gap:2rem; margin-top:1.2rem; }
+  .hero-meta span { background:rgba(255,255,255,.15); padding:.3rem .9rem; border-radius:20px; font-size:.8rem; font-weight:600; }
+
+  /* STATS */
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-bottom:2rem; }
+  .stat { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:1.25rem; text-align:center; }
+  .stat-value { font-size:2rem; font-weight:800; color:var(--green); }
+  .stat-label { font-size:.78rem; color:var(--gray); margin-top:.2rem; }
+  .stat-sub { font-size:.72rem; color:var(--warm); font-weight:600; margin-top:.1rem; }
+  .stat.warn .stat-value { color:var(--orange); }
+
+  /* CARD */
+  .card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem 2rem; margin-bottom:1.25rem; }
+  .card h2 { font-size:1.1rem; color:var(--green); margin-bottom:1rem; display:flex; align-items:center; gap:.5rem; }
+  .card h3 { font-size:.95rem; color:var(--dark); margin:1rem 0 .5rem; font-weight:600; }
+
+  /* BADGE / TAG */
+  .badge { display:inline-block; padding:.15rem .65rem; border-radius:20px; font-size:.68rem; font-weight:700; }
+  .badge-green { background:var(--green-light); color:var(--green); }
+  .badge-orange { background:var(--orange-light); color:var(--orange); }
+  .badge-gray { background:#f3f4f6; color:var(--gray); }
+  .badge-warm { background:var(--warm-light); color:var(--warm); }
+
+  /* CALLOUT */
+  .callout { border-left:4px solid var(--green); background:var(--green-light); padding:.9rem 1.2rem; border-radius:0 var(--radius) var(--radius) 0; margin:.75rem 0; font-size:.88rem; }
+  .callout.warn { border-left-color:var(--orange); background:var(--orange-light); }
+  .callout strong { color:var(--green); }
+  .callout.warn strong { color:var(--orange); }
+
+  /* TABLE */
+  table { width:100%; border-collapse:collapse; font-size:.83rem; }
+  th { background:var(--green); color:white; padding:.6rem .85rem; text-align:left; font-weight:600; }
+  td { padding:.55rem .85rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  tr:nth-child(even) td { background:var(--gray-light); }
+
+  /* PUSH CARDS */
+  .push-grid { display:grid; gap:1rem; }
+  .push-card { background:var(--white); border:1.5px solid var(--border); border-radius:var(--radius); padding:1.25rem 1.5rem; box-shadow:var(--shadow); }
+  .push-card.action { border-color:var(--green-mid); }
+  .push-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:.75rem; flex-wrap:wrap; gap:.5rem; }
+  .push-id { font-weight:800; color:var(--green); font-size:.95rem; }
+  .push-meta { display:flex; gap:.5rem; flex-wrap:wrap; }
+  .push-body { background:var(--gray-light); border-radius:8px; padding:.85rem 1rem; margin:.6rem 0; }
+  .push-title { font-weight:700; font-size:.88rem; margin-bottom:.2rem; }
+  .push-text { font-size:.83rem; color:var(--gray); }
+  .push-footer { display:flex; justify-content:flex-end; align-items:center; margin-top:.75rem; }
+  .push-deeplink { display:none; }
+  .push-meta-info { margin-top:.6rem; padding:.5rem .65rem; background:var(--gray-light); border-radius:6px; border:1px solid var(--border); }
+  .push-meta-info ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:.22rem; }
+  .push-meta-info li { font-size:.76rem; color:var(--gray); display:flex; gap:.5rem; align-items:baseline; line-height:1.4; }
+  .push-meta-info .meta-label { font-weight:700; color:var(--dark); font-size:.68rem; text-transform:uppercase; letter-spacing:.04em; flex-shrink:0; width:72px; }
+  .push-meta-info .meta-warn { color:var(--orange); font-weight:600; }
+  .copy-btn { background:var(--green); color:white; border:none; padding:.35rem .9rem; border-radius:6px; font-size:.75rem; font-weight:600; cursor:pointer; transition:opacity .2s; }
+  .copy-btn:hover { opacity:.85; }
+  .copy-btn.copied { background:var(--green-mid); }
+  /* FIELD COPY BUTTONS */
+  .push-field-row { display:flex; align-items:flex-start; gap:.5rem; margin-bottom:.35rem; }
+  .push-field-row:last-child { margin-bottom:0; }
+  .push-field-row .push-title,
+  .push-field-row .push-text { flex:1; margin-bottom:0; }
+  .copy-field-btn { flex-shrink:0; padding:.2rem .55rem; font-size:.68rem; font-weight:600; border:1.5px solid #d1d5db; background:white; color:#6b7280; border-radius:5px; cursor:pointer; transition:all .15s; white-space:nowrap; line-height:1.4; margin-top:.1rem; }
+  .copy-field-btn:hover { border-color:var(--green); color:var(--green); background:#f8fdf0; }
+  .copy-field-btn.copied { background:var(--green); color:white; border-color:var(--green); }
+
+  /* SURFACE CARDS */
+  .surface-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
+  .surface-card { background:var(--white); border:1.5px solid var(--border); border-radius:var(--radius); padding:1.25rem; box-shadow:var(--shadow); }
+  .surface-card h3 { font-size:.9rem; margin-bottom:.5rem; margin-top:0; }
+  .surface-icon { font-size:2rem; margin-bottom:.5rem; }
+  .surface-status { margin-top:.75rem; }
+
+  /* PRIZES */
+  .prizes { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin:1rem 0; }
+  .prize-card { border-radius:var(--radius); padding:1.25rem; text-align:center; border:2px solid var(--border); }
+  .prize-card.gold { border-color:#d4a017; background:#fffbeb; }
+  .prize-card.silver { border-color:#9ca3af; background:#f9fafb; }
+  .prize-card.bronze { border-color:#b45309; background:#fffbf0; }
+  .prize-medal { font-size:2.5rem; }
+  .prize-pos { font-size:.75rem; font-weight:700; color:var(--gray); margin:.3rem 0; }
+  .prize-name { font-size:.9rem; font-weight:700; margin:.3rem 0; }
+  .prize-value { font-size:.75rem; color:var(--warm); }
+
+  /* LOOP DIAGRAM */
+  .loop { display:flex; align-items:center; justify-content:center; gap:0; flex-wrap:wrap; margin:1.5rem 0; }
+  .loop-step { background:var(--green-light); border:2px solid var(--green-mid); border-radius:var(--radius); padding:.85rem 1rem; text-align:center; min-width:110px; flex:1; max-width:140px; }
+  .loop-step-icon { font-size:1.5rem; }
+  .loop-step-label { font-size:.72rem; font-weight:600; color:var(--green); margin-top:.3rem; }
+  .loop-step-pts { font-size:.68rem; color:var(--warm); margin-top:.1rem; }
+  .loop-arrow { font-size:1.2rem; color:var(--green-mid); padding:0 .4rem; }
+
+  /* TIMELINE */
+  .tl { position:relative; padding-left:2rem; }
+  .tl::before { content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:var(--green-mid); }
+  .tl-item { position:relative; margin-bottom:1.25rem; cursor:pointer; border-radius:8px; padding:.3rem .5rem .3rem 0; transition:background .15s, opacity .15s; user-select:none; }
+  .tl-item:hover { background:rgba(168,190,106,.1); }
+  .tl-item::before { content:''; position:absolute; left:-2rem; top:8px; width:16px; height:16px; border-radius:50%; background:var(--green); border:3px solid var(--green-light); transition:all .2s; }
+  .tl-item.pending::before { background:var(--gray); border-color:#e5e7eb; }
+  .tl-item.warn::before { background:var(--orange); border-color:var(--orange-light); }
+  .tl-item.tl-done::before { background:var(--green) !important; border-color:var(--green-light) !important; box-shadow:0 0 0 3px rgba(59,79,14,.12); }
+  .tl-item.tl-done .tl-title { text-decoration:line-through; color:var(--gray); }
+  .tl-item.tl-done .tl-date { opacity:.55; }
+  .tl-item.tl-done .tl-desc { opacity:.4; }
+  .tl-item.tl-done .tl-done-badge { display:inline-flex; }
+  .tl-done-badge { display:none; align-items:center; gap:.25rem; font-size:.65rem; font-weight:700; color:var(--green); background:var(--green-light); padding:.1rem .45rem; border-radius:10px; margin-left:.5rem; vertical-align:middle; }
+  .tl-date { font-size:.72rem; font-weight:700; color:var(--green); text-transform:uppercase; }
+  .tl-title { font-weight:600; margin:.1rem 0; font-size:.9rem; }
+  .tl-desc { font-size:.8rem; color:var(--gray); }
+
+  /* CHECKLIST */
+  .checklist { list-style:none; }
+  .checklist li { display:flex; align-items:flex-start; gap:.75rem; padding:.6rem 0; border-bottom:1px solid var(--border); }
+  .checklist li:last-child { border-bottom:none; }
+  .checklist input[type=checkbox] { width:18px; height:18px; accent-color:var(--green); cursor:pointer; flex-shrink:0; margin-top:.15rem; }
+  .check-label { font-size:.88rem; }
+  .check-label.done { text-decoration:line-through; color:var(--gray); }
+  .check-sub { font-size:.75rem; color:var(--gray); margin-top:.1rem; }
+
+  /* VICTOR */
+  .victor-item { display:flex; align-items:flex-start; gap:1rem; padding:1rem 0; border-bottom:1px solid var(--border); }
+  .victor-item:last-child { border-bottom:none; }
+  .victor-id { font-weight:800; color:var(--green); font-size:.95rem; min-width:36px; }
+  .victor-content { flex:1; }
+  .victor-title { font-weight:700; font-size:.9rem; margin-bottom:.25rem; }
+  .victor-desc { font-size:.8rem; color:var(--gray); line-height:1.5; }
+  .complexity { display:inline-block; padding:.1rem .5rem; border-radius:4px; font-size:.68rem; font-weight:700; }
+  .complexity-s { background:#dcfce7; color:#166534; }
+  .complexity-m { background:#fef9c3; color:#854d0e; }
+  .victor-check { display:flex; align-items:center; gap:.5rem; margin-top:.5rem; }
+  .victor-check input { accent-color:var(--green); }
+  .victor-check label { font-size:.78rem; color:var(--gray); cursor:pointer; }
+
+  /* PHASE PILLS */
+  .phase-pills { display:flex; gap:.5rem; margin-bottom:1rem; flex-wrap:wrap; }
+  .phase-pill { padding:.4rem 1rem; border-radius:20px; font-size:.78rem; font-weight:600; cursor:pointer; border:2px solid var(--green-mid); color:var(--green); background:white; transition:all .2s; }
+  .phase-pill.active, .phase-pill:hover { background:var(--green); color:white; border-color:var(--green); }
+  .phase-content { display:none; }
+  .phase-content.active { display:block; }
+
+  /* LANG SWITCHER */
+  .lang-switcher { display:flex; align-items:center; gap:.4rem; margin-bottom:1.25rem; flex-wrap:wrap; }
+  .lang-switcher-label { font-size:.72rem; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:.05em; margin-right:.25rem; }
+  .lang-pill { padding:.3rem .75rem; border-radius:20px; font-size:.75rem; font-weight:700; cursor:pointer; border:2px solid #d1d5db; color:#6b7280; background:white; transition:all .15s; }
+  .lang-pill.active, .lang-pill:hover { background:#1e3a5f; color:white; border-color:#1e3a5f; }
+  .lang-note { font-size:.7rem; color:var(--orange); font-weight:600; margin-left:.5rem; }
+
+  /* RESPONSIVE */
+  @media (max-width:768px) {
+    .prizes { grid-template-columns:1fr; }
+    .surface-grid { grid-template-columns:1fr; }
+    .hero { padding:1.5rem; }
+    .hero h1 { font-size:1.4rem; }
+    .hero-meta { flex-wrap:wrap; gap:.75rem; }
+    .loop { gap:.3rem; }
+    .loop-step { min-width:80px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">🍵 Matcha & CO</div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="showPanel('overview')">Overview</div>
+    <div class="nav-tab" onclick="showPanel('referral')">Referral Loop</div>
+    <div class="nav-tab" onclick="showPanel('pushes')">Push Flows</div>
+    <div class="nav-tab" onclick="showPanel('inapp')">In-app</div>
+    <div class="nav-tab" onclick="showPanel('victor')" style="color:var(--orange);font-weight:700">Engineering</div>
+    <div class="nav-tab" onclick="showPanel('timeline')">Timeline</div>
+    <div class="nav-tab" onclick="showPanel('checklist')" style="color:var(--green);font-weight:700">✅ Checklist</div>
+  </div>
+</nav>
+
+<!-- ═══════════ OVERVIEW ═══════════ -->
+<div class="panel active" id="overview">
+  <div class="hero">
+    <h1>Campaña Aniversario Matcha & CO</h1>
+    <p>Viral Referral Loop + Oferta Aniversario · Flujos completos de app y push</p>
+    <div class="hero-meta">
+      <span>📅 8–30 junio 2026</span>
+      <span>⏳ 26 días para el lanzamiento</span>
+      <span>🚀 22 días de campaña</span>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value">7</div>
+      <div class="stat-label">Push notifications</div>
+      <div class="stat-sub">4 referral + 3 oferta</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">3</div>
+      <div class="stat-label">Action-based flows</div>
+      <div class="stat-sub">RA1 sin desarrollo · RA2/3 requieren V3</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">3</div>
+      <div class="stat-label">Superficies in-app</div>
+      <div class="stat-sub">Home · Referidos · Novedades</div>
+    </div>
+    <div class="stat warn">
+      <div class="stat-value">2</div>
+      <div class="stat-label">Items dev prioritarios</div>
+      <div class="stat-sub">Home block · pantalla de referidos</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Las dos mecánicas</h2>
+    <table>
+      <tr><th>Mecánica</th><th>Objetivo</th><th>Incentivo</th><th>Canales</th></tr>
+      <tr>
+        <td><strong>Viral Referral Loop</strong></td>
+        <td>Activar base app para referir nuevos usuarios</td>
+        <td>Leaderboard mensual junio + premios top 5</td>
+        <td>In-app + Push</td>
+      </tr>
+      <tr>
+        <td><strong>Oferta Aniversario</strong></td>
+        <td>Conversión y recompra con descuento especial</td>
+        <td>20% / 25% en +45€ / Botella térmica en +55€</td>
+        <td>In-app + Push</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>⚠️ Decisiones pendientes antes del 16 de mayo</h2>
+    <table>
+      <tr><th>Decisión</th><th>Impacto</th></tr>
+      <tr>
+        <td>Formato de entrega del premio Top 1 (año de producto, ~180€)</td>
+        <td>Bloquea el copy definitivo de campaign</td>
+      </tr>
+      <tr>
+        <td>Formato de entrega del premio Top 2–5 (próximo pedido gratis hasta 50€ — las gift cards no aplican en app)</td>
+        <td>Bloquea el copy definitivo de campaign</td>
+      </tr>
+      <tr>
+        <td>¿Activar multiplicador ×2 puntos referidos durante junio?</td>
+        <td>Si sí → 1–2 días de desarrollo (Victor). Deadline para decidir: 16 mayo</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>📋 Estado del engineering request</h2>
+    <table>
+      <tr><th>#</th><th>Qué</th><th>Complejidad</th><th>Estado</th></tr>
+      <tr><td><strong>VX1 → F1+F2</strong></td><td>¿Existe <code>screen=referral</code> como deep link? → <strong>NO</strong>. Falta en <code>_layout.tsx</code> (F1) y en <code>DEEP_LINK_ROUTES</code> de Novedades (F2).</td><td>—</td><td><span class="badge badge-green">✅ Verificado</span></td></tr>
+      <tr><td><strong>VX2</strong></td><td>¿<code>award_points</code> dispara push automático? → <strong>NO</strong>. RA2/RA3 necesitan V3.</td><td>—</td><td><span class="badge badge-green">✅ Verificado</span></td></tr>
+      <tr><td><strong>V1</strong></td><td>Home campaign block (visible 8–30 jun)</td><td><span class="complexity complexity-s">rápido</span></td><td><span class="badge badge-orange">Pendiente → Victor</span></td></tr>
+      <tr><td><strong>V2</strong></td><td>Banner premios + posición propia en pantalla referidos</td><td><span class="complexity complexity-s">rápido</span></td><td><span class="badge badge-orange">Pendiente → Victor</span></td></tr>
+      <tr><td><strong>V3</strong></td><td>sendPush() tras awardPoints() en routes/referral.ts (RA2 y RA3)</td><td><span class="complexity complexity-s">rápido</span></td><td><span class="badge badge-orange">Pendiente → Victor</span></td></tr>
+      <tr><td><strong>VX4</strong></td><td>¿Segmento <code>referral_count ≥ 1</code>? → <strong>NO</strong>. R3 usa <code>active_30d</code>.</td><td>—</td><td><span class="badge badge-green">✅ Verificado</span></td></tr>
+      <tr><td><strong>VX5</strong></td><td>¿Filtros exclusión push por compra reciente/inactividad? → <strong>PARCIAL</strong>. T2/T3 usan <code>active_30d</code>.</td><td>—</td><td><span class="badge badge-green">✅ Verificado</span></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>⚡ Próximas acciones — semana del 13–16 mayo</h2>
+    <table>
+      <tr><th>Acción</th><th>Quién</th><th>Deadline</th></tr>
+      <tr><td>Confirmar formato de entrega premios Top 1 y Top 2–5</td><td>Pablo</td><td>16 mayo</td></tr>
+      <tr><td>Decidir si se activa multiplicador ×2 de puntos</td><td>Pablo</td><td>16 mayo</td></tr>
+      <tr><td>Pasar engineering request a Victor (preguntas de verificación primero, luego home block + pantalla referidos)</td><td>Pablo</td><td>16 mayo</td></tr>
+    </table>
+    <div class="callout" style="margin-top:.75rem">
+      <strong>Critical path:</strong> Formato premio → Copy definitivo → Traducciones (25 mayo) → Setup admin (31 mayo) → QA · revisión (7 jun) → <strong>Lanzamiento 8 junio</strong>
+      <div style="color:var(--warm);margin-top:.3rem;font-size:.82rem">Plan B si el home block no está listo el 8 de jun: lanzar con pushes + pantalla de referidos + Novedades. Activar el home block en cuanto esté.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🚫 Lo que NO hacemos (y por qué)</h2>
+    <table>
+      <tr><th>No hacemos</th><th>Por qué</th></tr>
+      <tr><td>Push automático al subir de posición en el ranking</td><td>Requiere 1–2 días de desarrollo (el trigger no existe). Sin tiempo.</td></tr>
+      <tr><td>Variables dinámicas en copy (ej. "eres el #3")</td><td>Requiere desarrollo adicional. Sin tiempo.</td></tr>
+      <tr><td>Journey complejo de referidos con múltiples ramas</td><td>Overkill. El loop es: awareness → acción existente.</td></tr>
+      <tr><td>Klaviyo ↔ app bidireccional</td><td>Sin tiempo y sin claridad técnica. Dejar para más adelante.</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>📧 Canal email (secundario)</h2>
+    <p style="font-size:.88rem;margin-bottom:.75rem;">Audiencia: usuarios con compra via app (<code>source=app</code> o tag equivalente). Vía: Klaviyo. No bloquea el lanzamiento — se activa si hay tiempo.</p>
+    <table>
+      <tr><th>Email</th><th>Fecha</th><th>Contenido</th></tr>
+      <tr><td><strong>Lanzamiento</strong></td><td>A definir — <em>no el 8 jun</em> (ese día ya hay email web)</td><td>Anuncio referral loop + oferta aniversario</td></tr>
+      <tr><td><strong>Cierre</strong></td><td>28 junio</td><td>Recordatorio últimos días</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════ REFERRAL LOOP ═══════════ -->
+<div class="panel" id="referral">
+  <div class="hero">
+    <h1>Viral Referral Loop</h1>
+    <p>Mecánica, premios y puntos de la campaña de referidos de junio</p>
+  </div>
+
+  <div class="card">
+    <h2>🔄 El loop completo</h2>
+    <div class="loop">
+      <div class="loop-step">
+        <div class="loop-step-icon">📱</div>
+        <div class="loop-step-label">Usuario comparte enlace</div>
+        <div class="loop-step-pts">Pantalla "Invita a un amigo"</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-step">
+        <div class="loop-step-icon">👤</div>
+        <div class="loop-step-label">Amigo se registra</div>
+        <div class="loop-step-pts">+50 pts al referidor</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-step">
+        <div class="loop-step-icon">🛒</div>
+        <div class="loop-step-label">Amigo hace 1ª compra</div>
+        <div class="loop-step-pts">+150 pts al referidor</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-step">
+        <div class="loop-step-icon">🏆</div>
+        <div class="loop-step-label">Sube en el leaderboard</div>
+        <div class="loop-step-pts">Top 5 = premios</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-step" style="background:var(--green);border-color:var(--green);">
+        <div class="loop-step-icon">🎂</div>
+        <div class="loop-step-label" style="color:white;">30 junio: ganadores</div>
+        <div class="loop-step-pts" style="color:rgba(255,255,255,.7);">Premio físico</div>
+      </div>
+    </div>
+    <div class="callout">
+      <strong>Puntos actuales:</strong> 50 pts por registro + 150 pts por compra (200 pts máx por referido). Los puntos <strong>no cambian</strong> durante la campaña — el incentivo nuevo son los premios del leaderboard.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🥇 Premios del leaderboard</h2>
+    <div class="prizes">
+      <div class="prize-card gold">
+        <div class="prize-medal">🥇</div>
+        <div class="prize-pos">TOP 1</div>
+        <div class="prize-name">Un año de producto gratis</div>
+        <div class="prize-value">~180€</div>
+        <div style="margin-top:.75rem"><span class="badge badge-orange">⚠️ Formato entrega pendiente</span></div>
+      </div>
+      <div class="prize-card silver">
+        <div class="prize-medal">🥈</div>
+        <div class="prize-pos">TOP 2–5</div>
+        <div class="prize-name">Próximo pedido gratis hasta 50€</div>
+        <div class="prize-value">Valor: 50€</div>
+        <div style="margin-top:.75rem"><span class="badge badge-orange">⚠️ Formato entrega pendiente</span></div>
+      </div>
+      <div class="prize-card" style="background:#f9f9f9;border:2px dashed #d1d5db;">
+        <div class="prize-medal">❓</div>
+        <div class="prize-pos" style="color:#9ca3af;">TOP 6–10</div>
+        <div class="prize-name" style="color:#6b7280;">Opcional — a revisar</div>
+        <div class="prize-value" style="color:#9ca3af;">Pendiente definir si aplica y qué premio</div>
+        <div style="margin-top:.75rem"><span class="badge badge-gray">Por decidir</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>💡 Opción opcional — multiplicador ×2</h2>
+    <p style="font-size:.88rem;margin-bottom:.75rem;">Si se decide activar "puntos dobles en junio": 100 pts registro + 300 pts compra. Mensaje simple: <em>"Este mes, cada referido vale el doble."</em></p>
+    <table>
+      <tr><th></th><th>Sin multiplicador (actual)</th><th>Con multiplicador ×2</th></tr>
+      <tr><td>Por registro</td><td>50 pts</td><td>100 pts</td></tr>
+      <tr><td>Por compra</td><td>150 pts</td><td>300 pts</td></tr>
+      <tr><td>Máx por referido</td><td>200 pts</td><td>400 pts</td></tr>
+      <tr><td>Desarrollo necesario</td><td>—</td><td>1–2 días de desarrollo (Victor)</td></tr>
+    </table>
+    <div class="callout warn" style="margin-top:.75rem"><strong>Decidir antes del 16 de mayo.</strong> Si no hay tiempo o no se considera necesario, los premios del leaderboard son incentivo suficiente.</div>
+  </div>
+</div>
+
+<!-- ═══════════ PUSH FLOWS ═══════════ -->
+<div class="panel" id="pushes">
+  <div class="hero">
+    <h1>Push Notifications</h1>
+    <p>Todos los flows — time-based y action-based. Copy en ES listo para usar.</p>
+  </div>
+
+  <div class="phase-pills">
+    <div class="phase-pill active" onclick="showPhase('r-time','push-phase')">⏰ Referral · Time-based</div>
+    <div class="phase-pill" onclick="showPhase('r-action','push-phase')">⚡ Referral · Action-based</div>
+    <div class="phase-pill" onclick="showPhase('oferta','push-phase')">🎂 Oferta Aniversario</div>
+  </div>
+
+  <div class="lang-switcher">
+    <span class="lang-switcher-label">Idioma</span>
+    <div class="lang-pill active" onclick="setLang('es')">ES</div>
+    <div class="lang-pill" onclick="setLang('fr')">FR</div>
+    <div class="lang-pill" onclick="setLang('de')">DE</div>
+    <div class="lang-pill" onclick="setLang('en')">EN</div>
+    <div class="lang-pill" onclick="setLang('pt')">PT</div>
+    <span class="lang-note" id="lang-uk-note" style="display:none;">⚠️ UK: verificar umbrales en £ antes de configurar T1/T2/T3</span>
+  </div>
+
+  <!-- REFERRAL TIME-BASED -->
+  <div class="phase-content active" id="r-time">
+    <div class="callout">Sin desarrollo necesario · configurables directamente desde admin → Push campaigns · Traducciones: FR, DE, EN, PT antes del 25 mayo</div>
+    <div class="push-grid">
+
+      <div class="push-card">
+        <div class="push-header">
+          <div class="push-id">R1 — Lanzamiento</div>
+          <div class="push-meta">
+            <span class="badge badge-green">9 jun · 10:00 AM</span>
+            <span class="badge badge-gray">announcements</span>
+          </div>
+        </div>
+        <div class="push-body" id="copy-r1"
+          data-segment="Usuarios activos en los últimos 30 días"
+          data-deeplink-label="Pantalla 'Invita a un amigo' — ruta: /referral · requiere fix F1 (_layout.tsx)"
+          data-title-es="🎂 Aniversario · Este mes los referidos tienen premio"
+          data-body-es="Top 5 usuarios que más inviten ganan: el primero un año de producto gratis, el resto el próximo pedido gratis."
+          data-title-fr="🎂 Anniversaire · Ce mois, parrainer rapporte des cadeaux"
+          data-body-fr="Les 5 meilleurs parrains gagnent : 1ère place un an de produit offert, 2e–5e leur prochaine commande offerte."
+          data-title-de="🎂 Jubiläum · Diesen Monat werden Empfehlungen belohnt"
+          data-body-de="Die Top 5 gewinnen: Platz 1 ein Jahr Produkt gratis, Platz 2–5 die nächste Bestellung gratis."
+          data-title-en="🎂 Anniversary · This month, referrals come with rewards"
+          data-body-en="The top 5 referrers win prizes — 1st place gets a year's products free, 2nd–5th get their next order free."
+          data-title-pt="🎂 Aniversário · Este mês, os convites têm prémio"
+          data-body-pt="Os 5 utilizadores que mais convidarem ganham: o 1.º um ano de produto grátis, o 2.º–5.º o próximo pedido grátis.">
+          <div class="push-title">🎂 Aniversario · Este mes los referidos tienen premio</div>
+          <div class="push-text">Top 5 usuarios que más inviten ganan: el primero un año de producto gratis, el resto el próximo pedido gratis.</div>
+        </div>
+        <div class="push-footer">
+          <span class="push-deeplink">pantalla "Invita a un amigo" — /referral · requiere F1</span>
+          <button class="copy-btn" onclick="copyPush('r1')">Copiar copy</button>
+        </div>
+      </div>
+
+      <div class="push-card">
+        <div class="push-header">
+          <div class="push-id">R2 — Mid-campaign</div>
+          <div class="push-meta">
+            <span class="badge badge-green">17 jun · 10:00 AM</span>
+            <span class="badge badge-gray">announcements</span>
+          </div>
+        </div>
+        <div class="push-body" id="copy-r2"
+          data-segment="Usuarios activos en los últimos 30 días"
+          data-deeplink-label="Pantalla 'Invita a un amigo' — ruta: /referral · requiere fix F1 (_layout.tsx)"
+          data-title-es="¿Has visto el ranking de junio?"
+          data-body-es="Quedan 13 días. Los 5 primeros ganan premios exclusivos. ¿Dónde estás?"
+          data-title-fr="Tu as vu le classement de juin ?"
+          data-body-fr="Il reste 13 jours. Les 5 premiers gagnent des lots exclusifs. Et toi, t'es où ?"
+          data-title-de="Hast du das Juni-Ranking schon gesehen?"
+          data-body-de="Noch 13 Tage. Die Top 5 gewinnen exklusive Preise. Wo stehst du?"
+          data-title-en="Have you seen the June rankings?"
+          data-body-en="13 days left. The top 5 win exclusive prizes. Where do you stand?"
+          data-title-pt="Já viste o ranking de junho?"
+          data-body-pt="Faltam 13 dias. Os 5 primeiros ganham prémios exclusivos. Onde estás?">
+          <div class="push-title">¿Has visto el ranking de junio?</div>
+          <div class="push-text">Quedan 13 días. Los 5 primeros ganan premios exclusivos. ¿Dónde estás?</div>
+        </div>
+        <div class="push-footer">
+          <span class="push-deeplink">pantalla "Invita a un amigo" — /referral · requiere F1</span>
+          <button class="copy-btn" onclick="copyPush('r2')">Copiar copy</button>
+        </div>
+      </div>
+
+      <div class="push-card">
+        <div class="push-header">
+          <div class="push-id">R3 — Sprint final</div>
+          <div class="push-meta">
+            <span class="badge badge-green">26 jun · 10:00 AM</span>
+            <span class="badge badge-gray">announcements</span>
+          </div>
+        </div>
+        <div class="push-body" id="copy-r3"
+          data-segment="Usuarios activos en los últimos 30 días"
+          data-deeplink-label="Pantalla 'Invita a un amigo' — ruta: /referral · requiere fix F1 (_layout.tsx)"
+          data-title-es="4 días para cerrar el ranking de junio"
+          data-body-es="Quedan 4 días. Un referido que compre te sube en el ranking. Comparte tu enlace."
+          data-title-fr="Plus que 4 jours pour le classement de juin"
+          data-body-fr="4 jours. Un filleul qui achète te fait monter. Partage ton lien maintenant."
+          data-title-de="Noch 4 Tage für das Juni-Ranking"
+          data-body-de="Noch 4 Tage. Jede erfolgreiche Empfehlung bringt dich nach oben. Teile deinen Link."
+          data-title-en="4 days left to close the June rankings"
+          data-body-en="4 days to go. A referral who buys moves you up the leaderboard. Share your link."
+          data-title-pt="4 dias para fechar o ranking de junho"
+          data-body-pt="Faltam 4 dias. Um convite que resulte em compra sobe-te no ranking. Partilha o teu link.">
+          <div class="push-title">4 días para cerrar el ranking de junio</div>
+          <div class="push-text">Quedan 4 días. Un referido que compre te sube en el ranking. Comparte tu enlace.</div>
+        </div>
+        <div class="push-footer">
+          <span class="push-deeplink">pantalla "Invita a un amigo" — /referral · requiere F1</span>
+          <button class="copy-btn" onclick="copyPush('r3')">Copiar copy</button>
+        </div>
+      </div>
+
+      <div class="push-card">
+        <div class="push-header">
+          <div class="push-id">R4 — Cierre <span class="badge badge-gray" style="font-size:0.7rem;vertical-align:middle;">opcional</span></div>
+          <div class="push-meta">
+            <span class="badge badge-green">29 jun · 10:00 AM</span>
+            <span class="badge badge-gray">announcements</span>
+          </div>
+        </div>
+        <div class="push-body" id="copy-r4"
+          data-segment="Usuarios activos en los últimos 30 días"
+          data-deeplink-label="Pantalla 'Invita a un amigo' — ruta: /referral · requiere fix F1 (_layout.tsx)"
+          data-title-es="Mañana cierra el ranking"
+          data-body-es="Última oportunidad para entrar en el top 5 de junio."
+          data-title-fr="Le classement ferme demain"
+          data-body-fr="Dernière chance d'entrer dans le top 5 de juin."
+          data-title-de="Das Ranking schließt morgen"
+          data-body-de="Letzte Chance für einen Platz in den Top 5."
+          data-title-en="The rankings close tomorrow"
+          data-body-en="Last chance to make the June top 5."
+          data-title-pt="O ranking fecha amanhã"
+          data-body-pt="Última oportunidade para entrar no top 5 de junho.">
+          <div class="push-title">Mañana cierra el ranking</div>
+          <div class="push-text">Última oportunidad para entrar en el top 5 de junio.</div>
+        </div>
+        <div class="push-footer">
+          <span class="push-deeplink">pantalla "Invita a un amigo" — /referral · requiere F1</span>
+          <button class="copy-btn" onclick="copyPush('r4')">Copiar copy</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- REFERRAL ACTION-BASED -->
+  <div class="phase-content" id="r-action">
+    <div class="callout"><strong>RA1</strong> no necesita desarrollo — el journey engine soporta <code>order_placed</code> de forma nativa (<code>enrollCustomerFromOrder()</code> → <code>fireJourneyTrigger('order_placed', ...)</code>, verificado en <code>journey-engine.ts</code>). Configurar desde el admin. <strong>RA2 y RA3</strong> necesitan <strong>V3</strong>: <code>awardPoints()</code> no dispara ningún push (verificado en <code>services/points.ts</code> — VX2=NO). Hay que añadir <code>sendPush()</code> explícito en <code>routes/referral.ts</code> tras cada <code>awardPoints()</code>.</div>
+    <div class="push-grid">
+
+      <div class="push-card action">
+        <div class="push-header">
+          <div class="push-id">RA1 — Post-compra → nudge referral</div>
+          <div class="push-meta">
+            <span class="badge badge-green">Sin desarrollo necesario</span>
+            <span class="badge badge-gray">Journey manual</span>
+            <span class="badge badge-gray">announcements</span>
+          </div>
+        </div>
+        <div class="push-body" id="copy-ra1"
+          data-segment="Journey manual — trigger: order_placed + delay 2h. Activo solo 8–30 junio"
+          data-deeplink-label="Pantalla 'Invita a un amigo' — ruta: /referral · requiere fix F1 (_layout.tsx)"
+          data-title-es="Tu pedido está en camino 🎂"
+          data-body-es="¿Se lo cuentas a alguien? En junio, cada referido compite por el ranking."
+          data-title-fr="Ta commande est en route 🎂"
+          data-body-fr="Tu en parles à quelqu'un ? En juin, chaque parrainage compte dans le classement."
+          data-title-de="Deine Bestellung ist unterwegs 🎂"
+          data-body-de="Erzählst du's jemandem weiter? Im Juni zählt jede Empfehlung für das Ranking."
+          data-title-en="Your order is on its way 🎂"
+          data-body-en="Why not tell someone? This June, every referral counts towards the rankings."
+          data-title-pt="A tua encomenda está a caminho 🎂"
+          data-body-pt="Contas a alguém? Em junho, cada convite compete no ranking.">
+          <div class="push-title">Tu pedido está en camino 🎂</div>
+          <div class="push-text">¿Se lo cuentas a alguien? En junio, cada referido compite por el ranking.</div>
+        </div>
+        <div class="push-footer">
+          <span class="push-deeplink">pantalla "Invita a un amigo" — /referral · requiere F1</span>
+          <button class="copy-btn" onclick="copyPush('ra1')">Copiar copy</button>
+        </div>
+      </div>
+
+      <div class="push-card action">
+        <div class="push-header">
+          <div class="push-id">RA2 — Referido se registra</div>
+          <div class="push-meta">
+            <span class="badge badge-orange">Requiere V3</span>
+            <span class="badge badge-gray">sendPush post-award</span>
+          </div>
+        </div>
+        <div class="push-body" id="copy-ra2"
+          data-segment="V3: sendPush() llamado desde routes/referral.ts tras awardPoints() de referralRegister (50 pts). Trigger: registro del referido. Deep link: pantalla referidos (requiere F1+F2)"
+          data-deeplink-label="Pantalla 'Invita a un amigo' — requiere F1 (case referral en _layout.tsx) + F2 (referral en DEEP_LINK_ROUTES)"
+          data-title-es="Alguien se ha unido gracias a ti"
+          data-body-es="+50 pts. Si hace su primera compra, ganas 150 pts más."
+          data-title-fr="Quelqu'un vient de te rejoindre"
+          data-body-fr="+50 pts. S'il passe sa première commande, tu gagnes encore 150 pts."
+          data-title-de="Jemand ist dank dir dabei"
+          data-body-de="+50 Punkte. Wenn er bestellt, bekommst du weitere 150 Punkte."
+          data-title-en="Someone just joined thanks to you"
+          data-body-en="+50 pts. If they place their first order, you earn another 150 pts."
+          data-title-pt="Alguém acaba de se juntar graças a ti"
+          data-body-pt="+50 pts. Se fizer a primeira compra, ganhas mais 150 pts.">
+          <div class="push-title">Alguien se ha unido gracias a ti</div>
+          <div class="push-text">+50 pts. Si hace su primera compra, ganas 150 pts más.</div>
+        </div>
+        <div class="push-footer">
+          <span class="push-deeplink">pantalla "Invita a un amigo" — /referral · requiere F1</span>
+          <button class="copy-btn" onclick="copyPush('ra2')">Copiar copy</button>
+        </div>
+      </div>
+
+      <div class="push-card action">
+        <div class="push-header">
+          <div class="push-id">RA3 — Referido compra</div>
+          <div class="push-meta">
+            <span class="badge badge-orange">Requiere V3</span>
+            <span class="badge badge-gray">sendPush post-award</span>
+          </div>
+        </div>
+        <div class="push-body" id="copy-ra3"
+          data-segment="V3: sendPush() llamado desde routes/referral.ts tras awardPoints() de referralPurchase (150 pts). Trigger: primera compra del referido. Deep link: pantalla referidos (requiere F1+F2)"
+          data-deeplink-label="Pantalla 'Invita a un amigo' — requiere F1 (case referral en _layout.tsx) + F2 (referral en DEEP_LINK_ROUTES)"
+          data-title-es="🎉 ¡Tu invitado/a ha comprado!"
+          data-body-es="+150 pts para ti. Mira cómo vas en el ranking."
+          data-title-fr="🎉 Ton filleul vient d'acheter !"
+          data-body-fr="+150 pts pour toi. Regarde où tu en es dans le classement."
+          data-title-de="🎉 Deine Empfehlung hat eingekauft!"
+          data-body-de="+150 Punkte für dich. Schau, wo du im Ranking stehst."
+          data-title-en="🎉 Your referral has made a purchase!"
+          data-body-en="+150 pts for you. See how you're doing in the rankings."
+          data-title-pt="🎉 O teu convidado comprou!"
+          data-body-pt="+150 pts para ti. Vê como estás no ranking.">
+          <div class="push-title">🎉 ¡Tu invitado/a ha comprado!</div>
+          <div class="push-text">+150 pts para ti. Mira cómo vas en el ranking.</div>
+        </div>
+        <div class="push-footer">
+          <span class="push-deeplink">pantalla "Invita a un amigo" — /referral · requiere F1</span>
+          <button class="copy-btn" onclick="copyPush('ra3')">Copiar copy</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- OFERTA -->
+  <div class="phase-content" id="oferta">
+    <div class="callout">Sin desarrollo necesario · Oferta: 20% cualquier pedido / 25% en +45€ / Botella térmica gratis en +55€</div>
+    <div class="push-grid">
+
+      <div class="push-card">
+        <div class="push-header">
+          <div class="push-id">T1 — Lanzamiento oferta</div>
+          <div class="push-meta">
+            <span class="badge badge-green">8 jun · 9:00 AM</span>
+            <span class="badge badge-gray">announcements</span>
+          </div>
+        </div>
+        <div class="push-body" id="copy-t1"
+          data-segment="Todos los usuarios"
+          data-deeplink-label="Tienda (pantalla principal de compra)"
+          data-title-es="🎂 ¡Feliz aniversario, Matcha & CO!"
+          data-body-es="Hasta 25% de descuento + botella térmica gratis en pedidos +55 €. Solo en junio."
+          data-title-fr="🎂 Bon anniversaire, Matcha & CO !"
+          data-body-fr="Jusqu'à 25 % de réduction + gourde thermique offerte dès 55 €. Seulement en juin."
+          data-title-de="🎂 Alles Gute zum Jubiläum, Matcha & CO!"
+          data-body-de="Bis zu 25 % Rabatt + Thermosflasche gratis ab 55 €. Nur im Juni."
+          data-title-en="🎂 Happy anniversary, Matcha & CO!"
+          data-body-en="Up to 25% off + a free thermal bottle on orders over £55. This June only."
+          data-title-pt="🎂 Feliz aniversário, Matcha & CO!"
+          data-body-pt="Até 25% de desconto + garrafa térmica grátis em encomendas acima de 55 €. Só em junho.">
+          <div class="push-title">🎂 ¡Feliz aniversario, Matcha & CO!</div>
+          <div class="push-text">Hasta 25% de descuento + botella térmica gratis en pedidos +55€. Solo en junio.</div>
+        </div>
+        <div class="push-footer">
+          <span class="push-deeplink">screen=shop</span>
+          <button class="copy-btn" onclick="copyPush('t1')">Copiar copy</button>
+        </div>
+      </div>
+
+      <div class="push-card">
+        <div class="push-header">
+          <div class="push-id">T2 — Mid oferta</div>
+          <div class="push-meta">
+            <span class="badge badge-green">18 jun · 10:00 AM</span>
+            <span class="badge badge-gray">announcements</span>
+          </div>
+        </div>
+        <div class="push-body" id="copy-t2"
+          data-segment="Segmento: active_30d. Nota: no existe filtro de exclusión por compra reciente en el admin (verificado VX5). Se usa active_30d como aproximación más cercana sin dev adicional."
+          data-deeplink-label="Tienda (pantalla principal de compra)"
+          data-title-es="¿Aún no has aprovechado el aniversario?"
+          data-body-es="20% en cualquier pedido. 25% en +45 €. Termina el 30 de junio."
+          data-title-fr="Tu n'as pas encore profité de l'anniversaire ?"
+          data-body-fr="20 % sur toute commande. 25 % dès 45 €. Offre valable jusqu'au 30 juin."
+          data-title-de="Den Jubiläumsrabatt noch nicht genutzt?"
+          data-body-de="20 % auf alles. 25 % ab 45 €. Nur bis 30. Juni."
+          data-title-en="Not made the most of our anniversary yet?"
+          data-body-en="20% off everything. 25% on orders over £45. Ends 30th June."
+          data-title-pt="Ainda não aproveitaste o aniversário?"
+          data-body-pt="20% em qualquer encomenda. 25% acima de 45 €. Termina a 30 de junho.">
+          <div class="push-title">¿Aún no has aprovechado el aniversario?</div>
+          <div class="push-text">20% en cualquier pedido. 25% en +45€. Termina el 30 de junio.</div>
+        </div>
+        <div class="push-footer">
+          <span class="push-deeplink">screen=shop</span>
+          <button class="copy-btn" onclick="copyPush('t2')">Copiar copy</button>
+        </div>
+      </div>
+
+      <div class="push-card">
+        <div class="push-header">
+          <div class="push-id">T3 — Cierre oferta</div>
+          <div class="push-meta">
+            <span class="badge badge-green">29 jun · 12:00 PM</span>
+            <span class="badge badge-gray">announcements</span>
+          </div>
+        </div>
+        <div class="push-body" id="copy-t3"
+          data-segment="Segmento: active_30d. Nota: no existe filtro de exclusión por compra reciente en el admin (verificado VX5). Se usa active_30d como aproximación más cercana sin dev adicional."
+          data-deeplink-label="Tienda (pantalla principal de compra)"
+          data-title-es="Mañana termina el aniversario"
+          data-body-es="Último día para el 25% + botella gratis. ¿Qué llevas tiempo queriendo pedir?"
+          data-title-fr="L'anniversaire se termine demain"
+          data-body-fr="Dernier jour pour le 25 % + gourde offerte. Tu avais repéré quelque chose ?"
+          data-title-de="Der Jubiläums-Deal endet morgen"
+          data-body-de="Letzter Tag für 25 % + gratis Thermosflasche. Was wolltest du dir schon lange gönnen?"
+          data-title-en="The anniversary offer ends tomorrow"
+          data-body-en="Last day for 25% off + a free bottle. What have you had your eye on?"
+          data-title-pt="O aniversário termina amanhã"
+          data-body-pt="Último dia para o 25% + garrafa grátis. O que andas a querer encomendar há algum tempo?">
+          <div class="push-title">Mañana termina el aniversario</div>
+          <div class="push-text">Último día para el 25% + botella gratis. ¿Qué llevas tiempo queriendo pedir?</div>
+        </div>
+        <div class="push-footer">
+          <span class="push-deeplink">screen=shop</span>
+          <button class="copy-btn" onclick="copyPush('t3')">Copiar copy</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ IN-APP ═══════════ -->
+<div class="panel" id="inapp">
+  <div class="hero">
+    <h1>Superficies In-app</h1>
+    <p>4 puntos de contacto dentro de la app durante la campaña</p>
+  </div>
+
+  <!-- Experience tabs -->
+  <div class="phase-pills" id="inapp-exp-pills" style="margin-bottom:1.5rem;">
+    <button class="phase-pill active" onclick="switchInappExp('home',this)">🏠 Home</button>
+    <button class="phase-pill" onclick="switchInappExp('referidos',this)">👥 Referidos</button>
+    <button class="phase-pill" onclick="switchInappExp('novedades',this)">🔔 Novedades</button>
+  </div>
+
+  <!-- ─────────────────── HOME ─────────────────── -->
+  <div id="inapp-exp-home" class="inapp-exp" style="display:block;">
+
+  <!-- ─── SPEC: HOME ─── -->
+  <div class="card" style="margin-bottom:1rem;">
+    <h2 style="display:flex;align-items:center;gap:.6rem;"><span style="color:var(--gray);font-weight:400;">📱 App →</span> 🏠 Home → Card slider <span class="badge badge-orange">⚙️ Victor V1</span></h2>
+    <p style="font-size:.85rem;color:var(--gray);margin-bottom:.75rem;">Card slider debajo del bloque hero. 2 cards deslizables, fondo claro, visible 8–30 junio, configurable desde admin.</p>
+    <div style="background:var(--green-light);border-radius:8px;padding:.75rem;font-size:.83rem;">
+      <strong>Card 1 — Oferta aniversario:</strong> 🎂 "Hasta 25% + botella gratis" · CTA "Ver oferta" → tienda<br>
+      <strong>Card 2 — Referral / Ranking:</strong> 🏆 "Invita y compite por el top 5" · CTA "Ver ranking" → /referral (requiere F1)
+    </div>
+  </div>
+
+  <!-- ─── MOCKUP: HOME ─── -->
+  <div class="card">
+    <h2><span style="color:var(--gray);font-weight:400;">📱 App →</span> 🏠 Home → Mockup visual</h2>
+    <div class="phase-pills" id="home-mock-pills" style="margin:-.25rem 0 1.25rem;">
+      <button class="phase-pill active" onclick="switchHomeMock('actual',this)">Estado actual</button>
+      <button class="phase-pill" onclick="switchHomeMock('card1',this)">Con campaña — Card 1 (Oferta)</button>
+      <button class="phase-pill" onclick="switchHomeMock('card2',this)">Con campaña — Card 2 (Ranking)</button>
+    </div>
+    <div style="display:flex;justify-content:center;">
+      <div style="width:296px;background:#e0e0e0;border-radius:44px;padding:9px;box-shadow:0 20px 56px rgba(0,0,0,.2),0 4px 12px rgba(0,0,0,.08);border:1.5px solid #ccc;">
+        <div style="background:#fafaf8;border-radius:37px;overflow:hidden;">
+          <div style="height:24px;background:#fafaf8;display:flex;align-items:center;justify-content:space-between;padding:0 18px 0 22px;">
+            <span style="font-size:.58rem;font-weight:700;color:#333;">9:41</span>
+            <span style="font-size:.48rem;color:#555;">▐▐▐ WiFi 🔋</span>
+          </div>
+          <div style="background:#fff;padding:6px 13px 8px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f0ede8;">
+            <div style="width:26px;height:26px;border-radius:50%;background:#f0ede8;display:flex;align-items:center;justify-content:center;font-size:.75rem;">🔔</div>
+            <div style="font-size:.52rem;font-weight:700;text-transform:uppercase;letter-spacing:.13em;color:#3B4F0E;border:1.5px solid #3B4F0E;border-radius:3px;padding:2px 7px;">MATCHA &amp; CO</div>
+            <div style="width:26px;height:26px;border-radius:50%;background:#3B4F0E;display:flex;align-items:center;justify-content:center;color:white;font-size:.6rem;font-weight:700;">PA</div>
+          </div>
+
+          <!-- ACTUAL -->
+          <div id="home-mock-actual" class="home-mock-state" style="display:block;">
+            <div style="background:#3B4F0E;margin:9px 9px 0;border-radius:13px;padding:13px 13px 12px;position:relative;min-height:90px;">
+              <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:2rem;opacity:.9;">🍵</div>
+              <div style="font-size:.46rem;color:rgba(255,255,255,.6);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;">BUENOS DÍAS ☀️</div>
+              <div style="font-size:.95rem;font-weight:800;color:#fff;line-height:1.2;margin-bottom:2px;">¡Hola, Pablo!</div>
+              <div style="font-size:.51rem;color:rgba(255,255,255,.5);margin-bottom:8px;">Jueves, 14 de mayo</div>
+              <div style="background:rgba(255,255,255,.13);border-radius:20px;padding:3px 8px;display:inline-block;font-size:.48rem;color:rgba(255,255,255,.8);">Un ritual pequeño, un cambio enorme ✨</div>
+            </div>
+            <div style="display:flex;gap:5px;padding:7px 9px 3px;">
+              <div style="flex:1;background:#fff;border:1px solid #f0ede8;border-radius:9px;padding:6px 4px;text-align:center;"><div style="font-size:.7rem;">🔥</div><div style="font-size:.6rem;font-weight:800;color:#403d3d;margin-top:1px;">1</div><div style="font-size:.37rem;color:#bbb;text-transform:uppercase;letter-spacing:.03em;margin-top:1px;">Días racha</div></div>
+              <div style="flex:1;background:#fff;border:1px solid #f0ede8;border-radius:9px;padding:6px 4px;text-align:center;"><div style="font-size:.7rem;">⭐</div><div style="font-size:.6rem;font-weight:800;color:#7e942b;margin-top:1px;">295</div><div style="font-size:.37rem;color:#bbb;text-transform:uppercase;letter-spacing:.03em;margin-top:1px;">Puntos</div></div>
+              <div style="flex:1;background:#fff;border:1px solid #f0ede8;border-radius:9px;padding:6px 4px;text-align:center;"><div style="font-size:.7rem;">🏆</div><div style="font-size:.56rem;font-weight:800;color:#7e942b;margin-top:1px;">Lover</div><div style="font-size:.37rem;color:#bbb;text-transform:uppercase;letter-spacing:.03em;margin-top:1px;">Nivel</div></div>
+            </div>
+            <div style="margin:3px 9px 5px;background:#fff;border:1px solid #f0ede8;border-radius:11px;padding:10px 11px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <div><span style="background:#3B4F0E;color:#fff;font-size:.41rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:2px 6px;border-radius:9px;">HOY</span><div style="font-size:.65rem;font-weight:700;color:#403d3d;margin-top:3px;">Tu ritual diario</div></div>
+                <div style="font-size:.52rem;color:#999;background:#f7f7f5;border-radius:9px;padding:2px 6px;font-weight:600;">0 / 3</div>
+              </div>
+              <div style="display:flex;gap:3px;margin-bottom:7px;"><div style="flex:1;height:2.5px;background:#ede9e4;border-radius:2px;"></div><div style="flex:1;height:2.5px;background:#ede9e4;border-radius:2px;"></div><div style="flex:1;height:2.5px;background:#ede9e4;border-radius:2px;"></div></div>
+              <div style="background:#f4f7ed;border-radius:7px;padding:7px 8px;display:flex;align-items:center;gap:6px;margin-bottom:5px;">
+                <div style="flex:1;"><div style="font-size:.4rem;color:#7e942b;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1px;">Siguiente paso</div><div style="font-size:.58rem;font-weight:700;color:#403d3d;">Check-in emocional</div><div style="font-size:.48rem;color:#aaa;">+1 pto · ~2 min</div></div>
+                <div style="font-size:.65rem;color:#aaa;">›</div>
+              </div>
+              <div style="font-size:.46rem;color:#bbb;text-align:center;margin-bottom:6px;">Completa los 5 hoy y gana +5 pts bonus</div>
+              <div style="background:#7e942b;color:#fff;border-radius:7px;padding:6px;text-align:center;font-size:.54rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;">Empezar mi ritual →</div>
+            </div>
+            <div style="margin:0 9px 9px;background:#f8f3ec;border-radius:9px;padding:6px 9px;display:flex;align-items:center;gap:6px;"><span style="font-size:.75rem;">🛒</span><div><div style="font-size:.53rem;font-weight:700;color:#403d3d;">¡Casi tienes tu -20%!</div><div style="font-size:.46rem;color:#aaa;">Añade solo 5.05€ más a tu cesta</div></div></div>
+          </div><!-- /actual -->
+
+          <!-- CARD 1: OFERTA (primero) -->
+          <div id="home-mock-card1" class="home-mock-state" style="display:none;">
+            <div style="background:#3B4F0E;margin:9px 9px 0;border-radius:13px;padding:13px 13px 12px;position:relative;min-height:90px;">
+              <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:2rem;opacity:.9;">🍵</div>
+              <div style="font-size:.46rem;color:rgba(255,255,255,.6);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;">BUENOS DÍAS ☀️</div>
+              <div style="font-size:.95rem;font-weight:800;color:#fff;line-height:1.2;margin-bottom:2px;">¡Hola, Pablo!</div>
+              <div style="font-size:.51rem;color:rgba(255,255,255,.5);margin-bottom:8px;">Lunes, 8 de junio</div>
+              <div style="background:rgba(255,255,255,.13);border-radius:20px;padding:3px 8px;display:inline-block;font-size:.48rem;color:rgba(255,255,255,.8);">Un ritual pequeño, un cambio enorme ✨</div>
+            </div>
+            <div style="padding:8px 9px 4px;">
+              <div style="font-size:.46rem;color:#705f5e;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;">🎂 ANIVERSARIO · JUNIO</div>
+              <div style="background:#f8f3ec;border-radius:12px;padding:11px;border:1px solid #e4d9cc;">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;"><div style="width:24px;height:24px;background:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.72rem;box-shadow:0 1px 3px rgba(0,0,0,.08);">🎂</div><div style="font-size:.48rem;color:#705f5e;font-weight:700;text-transform:uppercase;letter-spacing:.04em;">Oferta aniversario</div></div>
+                <div style="font-size:.7rem;font-weight:700;color:#403d3d;margin-bottom:3px;line-height:1.3;">Hasta 25% de descuento + botella gratis</div>
+                <div style="font-size:.55rem;color:#705f5e;line-height:1.45;margin-bottom:9px;">En pedidos superiores a 55 €. Válido hasta el 30 de junio.</div>
+                <div style="background:#7e942b;color:#fff;border-radius:7px;padding:6px 10px;font-size:.52rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;text-align:center;">Ver oferta →</div>
+              </div>
+              <div style="display:flex;justify-content:center;gap:4px;margin-top:7px;"><div style="width:14px;height:4px;background:#7e942b;border-radius:3px;"></div><div style="width:4px;height:4px;background:#ddd;border-radius:3px;"></div></div>
+            </div>
+            <div style="display:flex;gap:5px;padding:4px 9px 3px;">
+              <div style="flex:1;background:#fff;border:1px solid #f0ede8;border-radius:9px;padding:6px 4px;text-align:center;"><div style="font-size:.7rem;">🔥</div><div style="font-size:.6rem;font-weight:800;color:#403d3d;margin-top:1px;">1</div><div style="font-size:.37rem;color:#bbb;text-transform:uppercase;letter-spacing:.03em;margin-top:1px;">Días racha</div></div>
+              <div style="flex:1;background:#fff;border:1px solid #f0ede8;border-radius:9px;padding:6px 4px;text-align:center;"><div style="font-size:.7rem;">⭐</div><div style="font-size:.6rem;font-weight:800;color:#7e942b;margin-top:1px;">295</div><div style="font-size:.37rem;color:#bbb;text-transform:uppercase;letter-spacing:.03em;margin-top:1px;">Puntos</div></div>
+              <div style="flex:1;background:#fff;border:1px solid #f0ede8;border-radius:9px;padding:6px 4px;text-align:center;"><div style="font-size:.7rem;">🏆</div><div style="font-size:.56rem;font-weight:800;color:#7e942b;margin-top:1px;">Lover</div><div style="font-size:.37rem;color:#bbb;text-transform:uppercase;letter-spacing:.03em;margin-top:1px;">Nivel</div></div>
+            </div>
+            <div style="margin:3px 9px 0;background:#fff;border:1px solid #f0ede8;border-radius:11px;padding:8px 11px;opacity:.4;"><span style="background:#3B4F0E;color:#fff;font-size:.41rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:2px 6px;border-radius:9px;">HOY</span><div style="font-size:.62rem;font-weight:700;color:#403d3d;margin-top:3px;">Tu ritual diario · · ·</div></div>
+            <div style="height:16px;background:linear-gradient(to bottom,transparent,rgba(250,249,248,.97));margin:0 9px 9px;"></div>
+          </div><!-- /card1 -->
+
+          <!-- CARD 2: RANKING -->
+          <div id="home-mock-card2" class="home-mock-state" style="display:none;">
+            <div style="background:#3B4F0E;margin:9px 9px 0;border-radius:13px;padding:13px 13px 12px;position:relative;min-height:90px;">
+              <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:2rem;opacity:.9;">🍵</div>
+              <div style="font-size:.46rem;color:rgba(255,255,255,.6);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;">BUENOS DÍAS ☀️</div>
+              <div style="font-size:.95rem;font-weight:800;color:#fff;line-height:1.2;margin-bottom:2px;">¡Hola, Pablo!</div>
+              <div style="font-size:.51rem;color:rgba(255,255,255,.5);margin-bottom:8px;">Lunes, 8 de junio</div>
+              <div style="background:rgba(255,255,255,.13);border-radius:20px;padding:3px 8px;display:inline-block;font-size:.48rem;color:rgba(255,255,255,.8);">Un ritual pequeño, un cambio enorme ✨</div>
+            </div>
+            <div style="padding:8px 9px 4px;">
+              <div style="font-size:.46rem;color:#705f5e;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;">🎂 ANIVERSARIO · JUNIO</div>
+              <div style="background:#f8f3ec;border-radius:12px;padding:11px;border:1px solid #e4d9cc;">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;"><div style="width:24px;height:24px;background:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.72rem;box-shadow:0 1px 3px rgba(0,0,0,.08);">🏆</div><div style="font-size:.48rem;color:#705f5e;font-weight:700;text-transform:uppercase;letter-spacing:.04em;">Ranking junio</div></div>
+                <div style="font-size:.7rem;font-weight:700;color:#3B4F0E;margin-bottom:3px;line-height:1.3;">Invita y compite por el top 5</div>
+                <div style="font-size:.55rem;color:#705f5e;line-height:1.45;margin-bottom:9px;">Cada invitado que compre suma en el ranking. Los 5 primeros ganan premios exclusivos.</div>
+                <div style="background:#7e942b;color:#fff;border-radius:7px;padding:6px 10px;font-size:.52rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;text-align:center;">Ver ranking →</div>
+              </div>
+              <div style="display:flex;justify-content:center;gap:4px;margin-top:7px;"><div style="width:4px;height:4px;background:#ddd;border-radius:3px;"></div><div style="width:14px;height:4px;background:#7e942b;border-radius:3px;"></div></div>
+            </div>
+            <div style="display:flex;gap:5px;padding:4px 9px 3px;">
+              <div style="flex:1;background:#fff;border:1px solid #f0ede8;border-radius:9px;padding:6px 4px;text-align:center;"><div style="font-size:.7rem;">🔥</div><div style="font-size:.6rem;font-weight:800;color:#403d3d;margin-top:1px;">1</div><div style="font-size:.37rem;color:#bbb;text-transform:uppercase;letter-spacing:.03em;margin-top:1px;">Días racha</div></div>
+              <div style="flex:1;background:#fff;border:1px solid #f0ede8;border-radius:9px;padding:6px 4px;text-align:center;"><div style="font-size:.7rem;">⭐</div><div style="font-size:.6rem;font-weight:800;color:#7e942b;margin-top:1px;">295</div><div style="font-size:.37rem;color:#bbb;text-transform:uppercase;letter-spacing:.03em;margin-top:1px;">Puntos</div></div>
+              <div style="flex:1;background:#fff;border:1px solid #f0ede8;border-radius:9px;padding:6px 4px;text-align:center;"><div style="font-size:.7rem;">🏆</div><div style="font-size:.56rem;font-weight:800;color:#7e942b;margin-top:1px;">Lover</div><div style="font-size:.37rem;color:#bbb;text-transform:uppercase;letter-spacing:.03em;margin-top:1px;">Nivel</div></div>
+            </div>
+            <div style="margin:3px 9px 0;background:#fff;border:1px solid #f0ede8;border-radius:11px;padding:8px 11px;opacity:.4;"><span style="background:#3B4F0E;color:#fff;font-size:.41rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:2px 6px;border-radius:9px;">HOY</span><div style="font-size:.62rem;font-weight:700;color:#403d3d;margin-top:3px;">Tu ritual diario · · ·</div></div>
+            <div style="height:16px;background:linear-gradient(to bottom,transparent,rgba(250,249,248,.97));margin:0 9px 9px;"></div>
+          </div><!-- /card2 -->
+
+          <div style="border-top:1px solid #f0ede8;display:flex;justify-content:space-around;padding:7px 0 14px;background:#fff;">
+            <div style="text-align:center;"><div style="font-size:.7rem;">🏠</div><div style="font-size:.35rem;color:#3B4F0E;font-weight:700;margin-top:1px;">Home</div></div>
+            <div style="text-align:center;"><div style="font-size:.7rem;">🧘</div><div style="font-size:.35rem;color:#aaa;margin-top:1px;">Ritual</div></div>
+            <div style="text-align:center;"><div style="font-size:.7rem;">🛒</div><div style="font-size:.35rem;color:#aaa;margin-top:1px;">Tienda</div></div>
+            <div style="text-align:center;"><div style="font-size:.7rem;">👥</div><div style="font-size:.35rem;color:#aaa;margin-top:1px;">Comunidad</div></div>
+            <div style="text-align:center;"><div style="font-size:.7rem;">🎁</div><div style="font-size:.35rem;color:#aaa;margin-top:1px;">Regalos</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:520px;margin:1.5rem auto 0;display:flex;flex-direction:column;gap:.5rem;">
+      <div style="background:var(--gray-light);border-radius:8px;padding:.6rem .9rem;font-size:.78rem;color:var(--dark);border:1px solid var(--border);"><strong>Card 1 — Oferta:</strong> 🎂 "Hasta 25% + botella gratis" · CTA "Ver oferta" → tienda</div>
+      <div style="background:var(--gray-light);border-radius:8px;padding:.6rem .9rem;font-size:.78rem;color:var(--dark);border:1px solid var(--border);"><strong>Card 2 — Ranking:</strong> 🏆 "Invita y compite por el top 5" · CTA "Ver ranking" → <code>/referral</code> <span style="color:var(--orange);font-weight:600;">(requiere F1)</span></div>
+      <div style="background:var(--gray-light);border-radius:8px;padding:.6rem .9rem;font-size:.78rem;color:var(--dark);border:1px solid var(--border);"><strong>Comportamiento:</strong> swipeable · dots indicator · mismo fondo (#f8f3ec) · 8–30 junio · configurable desde admin</div>
+    </div>
+  </div><!-- /mockup home -->
+
+  </div><!-- /inapp-exp-home -->
+
+  <!-- ─────────────────── REFERIDOS ─────────────────── -->
+  <div id="inapp-exp-referidos" class="inapp-exp" style="display:none;">
+    <div class="card" style="margin-bottom:1rem;">
+      <h2 style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem;"><span style="color:var(--gray);font-weight:400;">📱 App →</span> 👥 Referidos → Premios + posición <span class="badge badge-orange">⚙️ Victor V2</span></h2>
+      <p style="font-size:.85rem;color:var(--gray);margin-bottom:.75rem;">Pantalla "Invita a un amigo" — ya existe. Se añaden dos elementos nuevos durante la campaña:</p>
+      <div style="display:flex;flex-direction:column;gap:.5rem;font-size:.83rem;">
+        <div style="background:var(--green-light);border-radius:8px;padding:.7rem .9rem;"><strong>① Banner de premios</strong> — Card entre "Comparte tu enlace" y "Este mes". Muestra los premios por posición y fecha de cierre.</div>
+        <div style="background:var(--green-light);border-radius:8px;padding:.7rem .9rem;"><strong>② Posición propia</strong> — Si el usuario no está en top 10: fila extra al final del leaderboard. Si está en top 10: su fila aparece destacada con fondo highlight.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-bottom:1rem;"><span style="color:var(--gray);font-weight:400;">📱 App →</span> 👥 Referidos → Mockup visual</h2>
+      <div class="phase-pills" id="referidos-mock-pills" style="margin:-.25rem 0 1.25rem;">
+        <button class="phase-pill active" onclick="switchReferidosMock('actual',this)">Estado actual</button>
+        <button class="phase-pill" onclick="switchReferidosMock('campana',this)">Con campaña</button>
+      </div>
+      <div style="display:flex;justify-content:center;">
+        <!-- PHONE FRAME -->
+        <div style="width:296px;background:#e0e0e0;border-radius:44px;padding:9px;box-shadow:0 20px 56px rgba(0,0,0,.2),0 4px 12px rgba(0,0,0,.08);border:1.5px solid #ccc;">
+          <div style="background:#f8f4ef;border-radius:37px;overflow:hidden;">
+            <!-- Status bar -->
+            <div style="height:24px;background:#f8f4ef;display:flex;align-items:center;justify-content:space-between;padding:0 18px 0 22px;">
+              <span style="font-size:.58rem;font-weight:700;color:#333;">10:28</span>
+              <span style="font-size:.48rem;color:#555;">▐▐▐ WiFi 🔋</span>
+            </div>
+            <!-- Nav header -->
+            <div style="background:#f8f4ef;padding:4px 13px 8px;display:flex;align-items:center;position:relative;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 5px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#555;font-weight:300;">‹</div>
+              <div style="position:absolute;left:50%;transform:translateX(-50%);font-size:.62rem;font-weight:700;color:#1a1a1a;white-space:nowrap;">Invita a un amigo</div>
+            </div>
+            <!-- Scrollable content -->
+            <div style="overflow-y:auto;max-height:500px;padding:0 8px 10px;background:#f8f4ef;">
+
+              <!-- ─── ESTADO ACTUAL ─── -->
+              <div id="referidos-mock-actual" class="referidos-mock-state" style="display:block;">
+                <!-- Comparte tu enlace -->
+                <div style="background:#fff;border-radius:13px;padding:13px;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+                  <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;"><span style="font-size:.8rem;color:#7e942b;">⇄</span><span style="font-size:.62rem;font-weight:700;color:#1a1a1a;">Comparte tu enlace</span></div>
+                  <div style="font-size:.5rem;color:#999;margin-bottom:10px;line-height:1.55;">Envía tu enlace a amigos y gana puntos cuando se registren y compren.</div>
+                  <div style="background:#7e942b;border-radius:9px;padding:8px;display:flex;align-items:center;justify-content:center;gap:5px;"><span style="font-size:.62rem;color:#fff;">⬆</span><span style="font-size:.58rem;font-weight:700;color:#fff;">Compartir enlace</span></div>
+                </div>
+                <!-- Este mes -->
+                <div style="background:#fff;border-radius:13px;padding:12px 13px;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+                  <div style="font-size:.58rem;font-weight:700;color:#1a1a1a;margin-bottom:9px;">Este mes</div>
+                  <div style="display:flex;justify-content:space-around;margin-bottom:9px;">
+                    <div style="text-align:center;"><div style="font-size:.88rem;font-weight:800;color:#1a1a1a;">0</div><div style="font-size:.43rem;color:#bbb;margin-top:2px;">Registrados</div></div>
+                    <div style="text-align:center;"><div style="font-size:.88rem;font-weight:800;color:#1a1a1a;">0</div><div style="font-size:.43rem;color:#bbb;margin-top:2px;">Han comprado</div></div>
+                    <div style="text-align:center;"><div style="font-size:.88rem;font-weight:800;color:#7e942b;">0</div><div style="font-size:.43rem;color:#bbb;margin-top:2px;">Puntos este mes</div></div>
+                  </div>
+                  <div style="height:1px;background:#f0ede8;margin-bottom:8px;"></div>
+                  <div style="display:flex;align-items:center;gap:5px;justify-content:center;"><span style="font-size:.62rem;">🏆</span><span style="font-size:.5rem;color:#aaa;">0 puntos totales por invitaciones</span></div>
+                </div>
+                <!-- Top referidos -->
+                <div style="background:#fff;border-radius:13px;padding:12px 13px;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+                  <div style="display:flex;align-items:center;gap:6px;margin-bottom:9px;"><span style="font-size:.7rem;color:#c4773a;">📊</span><span style="font-size:.6rem;font-weight:700;color:#1a1a1a;">Top referidos del mes</span></div>
+                  <!-- #1 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.58rem;font-weight:800;color:#c4773a;">1</div><div style="width:22px;height:22px;border-radius:50%;background:#7e942b;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">IB</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Irene B.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #2 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.58rem;font-weight:800;color:#c4773a;">2</div><div style="width:22px;height:22px;border-radius:50%;background:#7e942b;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">ÁB</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Álex B.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #3 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.58rem;font-weight:800;color:#c4773a;">3</div><div style="width:22px;height:22px;border-radius:50%;background:#7e942b;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">FB</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Fernando B.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #4 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.55rem;font-weight:700;color:#888;">4</div><div style="width:22px;height:22px;border-radius:50%;background:#a8be6a;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">AS</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Adrián S.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #5 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.55rem;font-weight:700;color:#888;">5</div><div style="width:22px;height:22px;border-radius:50%;background:#a8be6a;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">TB</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Teresa B.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #6 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.55rem;font-weight:700;color:#888;">6</div><div style="width:22px;height:22px;border-radius:50%;background:#a8be6a;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">PM</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Pilar M.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #7 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.55rem;font-weight:700;color:#888;">7</div><div style="width:22px;height:22px;border-radius:50%;background:#a8be6a;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">MG</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Mía G.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #8 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.55rem;font-weight:700;color:#888;">8</div><div style="width:22px;height:22px;border-radius:50%;background:#a8be6a;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">ST</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Silvia T.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                </div>
+              </div><!-- /actual -->
+
+              <!-- ─── CON CAMPAÑA ─── -->
+              <div id="referidos-mock-campana" class="referidos-mock-state" style="display:none;">
+                <!-- Comparte tu enlace -->
+                <div style="background:#fff;border-radius:13px;padding:13px;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+                  <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;"><span style="font-size:.8rem;color:#7e942b;">⇄</span><span style="font-size:.62rem;font-weight:700;color:#1a1a1a;">Comparte tu enlace</span></div>
+                  <div style="font-size:.5rem;color:#999;margin-bottom:10px;line-height:1.55;">Envía tu enlace a amigos y gana puntos cuando se registren y compren.</div>
+                  <div style="background:#7e942b;border-radius:9px;padding:8px;display:flex;align-items:center;justify-content:center;gap:5px;"><span style="font-size:.62rem;color:#fff;">⬆</span><span style="font-size:.58rem;font-weight:700;color:#fff;">Compartir enlace</span></div>
+                </div>
+                <!-- CAMPAIGN BANNER -->
+                <div style="background:#f8f3ec;border-radius:13px;padding:13px;margin-bottom:6px;border:1px solid #e8ddd4;border-top:3px solid #c4773a;">
+                  <div style="display:flex;align-items:center;gap:6px;margin-bottom:9px;">
+                    <span style="font-size:.8rem;">🎂</span>
+                    <div>
+                      <div style="font-size:.46rem;color:#c4773a;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1px;">Aniversario Matcha &amp; CO</div>
+                      <div style="font-size:.6rem;font-weight:800;color:#3B4F0E;">Premios leaderboard junio</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:9px;">
+                    <div style="display:flex;align-items:center;gap:7px;background:#fff;border-radius:8px;padding:6px 9px;border:1px solid #ede6de;">
+                      <span style="font-size:.8rem;">🥇</span>
+                      <div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#3B4F0E;margin-bottom:1px;">Top 1</div><div style="font-size:.48rem;color:#888;">Un año de producto gratis</div></div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:7px;background:#fff;border-radius:8px;padding:6px 9px;border:1px solid #ede6de;">
+                      <span style="font-size:.8rem;">🥈</span>
+                      <div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#3B4F0E;margin-bottom:1px;">Top 2–5</div><div style="font-size:.48rem;color:#888;">Próximo pedido gratis hasta 50€</div></div>
+                    </div>
+                  </div>
+                  <div style="border-top:1px solid #e8ddd4;padding-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;">
+                    <span style="font-size:.52rem;color:#aaa;">⏱</span>
+                    <span style="font-size:.48rem;color:#aaa;">Cierre: 30 de junio · Ganadores el 1 julio</span>
+                  </div>
+                </div>
+                <!-- Este mes -->
+                <div style="background:#fff;border-radius:13px;padding:12px 13px;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+                  <div style="font-size:.58rem;font-weight:700;color:#1a1a1a;margin-bottom:9px;">Este mes</div>
+                  <div style="display:flex;justify-content:space-around;margin-bottom:9px;">
+                    <div style="text-align:center;"><div style="font-size:.88rem;font-weight:800;color:#1a1a1a;">0</div><div style="font-size:.43rem;color:#bbb;margin-top:2px;">Registrados</div></div>
+                    <div style="text-align:center;"><div style="font-size:.88rem;font-weight:800;color:#1a1a1a;">0</div><div style="font-size:.43rem;color:#bbb;margin-top:2px;">Han comprado</div></div>
+                    <div style="text-align:center;"><div style="font-size:.88rem;font-weight:800;color:#7e942b;">0</div><div style="font-size:.43rem;color:#bbb;margin-top:2px;">Puntos este mes</div></div>
+                  </div>
+                  <div style="height:1px;background:#f0ede8;margin-bottom:8px;"></div>
+                  <div style="display:flex;align-items:center;gap:5px;justify-content:center;"><span style="font-size:.62rem;">🏆</span><span style="font-size:.5rem;color:#aaa;">0 puntos totales por invitaciones</span></div>
+                </div>
+                <!-- Top referidos -->
+                <div style="background:#fff;border-radius:13px;padding:12px 13px;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+                  <div style="display:flex;align-items:center;gap:6px;margin-bottom:9px;"><span style="font-size:.7rem;color:#c4773a;">📊</span><span style="font-size:.6rem;font-weight:700;color:#1a1a1a;">Top referidos del mes</span></div>
+                  <!-- #1 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.58rem;font-weight:800;color:#c4773a;">1</div><div style="width:22px;height:22px;border-radius:50%;background:#7e942b;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">IB</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Irene B.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #2 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.58rem;font-weight:800;color:#c4773a;">2</div><div style="width:22px;height:22px;border-radius:50%;background:#7e942b;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">ÁB</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Álex B.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #3 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.58rem;font-weight:800;color:#c4773a;">3</div><div style="width:22px;height:22px;border-radius:50%;background:#7e942b;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">FB</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Fernando B.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #4 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.55rem;font-weight:700;color:#888;">4</div><div style="width:22px;height:22px;border-radius:50%;background:#a8be6a;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">AS</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Adrián S.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #5 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.55rem;font-weight:700;color:#888;">5</div><div style="width:22px;height:22px;border-radius:50%;background:#a8be6a;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">TB</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Teresa B.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #6 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.55rem;font-weight:700;color:#888;">6</div><div style="width:22px;height:22px;border-radius:50%;background:#a8be6a;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">PM</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Pilar M.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #7 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.55rem;font-weight:700;color:#888;">7</div><div style="width:22px;height:22px;border-radius:50%;background:#a8be6a;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">MG</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Mía G.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #8 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.55rem;font-weight:700;color:#888;">8</div><div style="width:22px;height:22px;border-radius:50%;background:#a8be6a;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">ST</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Silvia T.</div><div style="font-size:.44rem;color:#bbb;">4 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">200 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #9 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.55rem;font-weight:700;color:#888;">9</div><div style="width:22px;height:22px;border-radius:50%;background:#a8be6a;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">CM</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Carlos M.</div><div style="font-size:.44rem;color:#bbb;">3 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">150 pts</div></div>
+                  <div style="height:1px;background:#f5f2ee;"></div>
+                  <!-- #10 --><div style="display:flex;align-items:center;gap:7px;padding:5px 0;"><div style="width:16px;text-align:center;font-size:.55rem;font-weight:700;color:#888;">10</div><div style="width:22px;height:22px;border-radius:50%;background:#a8be6a;display:flex;align-items:center;justify-content:center;font-size:.42rem;font-weight:700;color:#fff;flex-shrink:0;">AR</div><div style="flex:1;"><div style="font-size:.54rem;font-weight:700;color:#1a1a1a;">Ana R.</div><div style="font-size:.44rem;color:#bbb;">3 invitados</div></div><div style="font-size:.54rem;font-weight:700;color:#7e942b;">150 pts</div></div>
+                  <!-- User outside top 10 -->
+                  <div style="margin-top:8px;padding-top:8px;border-top:1.5px dashed #e0dbd5;">
+                    <div style="background:#f8f3ec;border-radius:9px;border-left:3px solid #7e942b;padding:7px 10px;display:flex;align-items:center;justify-content:space-between;">
+                      <div style="display:flex;align-items:center;gap:7px;">
+                        <span style="font-size:.65rem;">📍</span>
+                        <div>
+                          <div style="font-size:.54rem;font-weight:700;color:#3B4F0E;margin-bottom:1px;">Tu posición actual</div>
+                          <div style="font-size:.47rem;color:#999;">#47 · 2 referidos este mes</div>
+                        </div>
+                      </div>
+                      <div style="font-size:.54rem;font-weight:700;color:#7e942b;">100 pts</div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- /campana -->
+
+            </div><!-- /scrollable -->
+            <!-- Bottom nav -->
+            <div style="background:#fff;border-top:1px solid #f0ede8;padding:5px 0 8px;display:flex;justify-content:space-around;align-items:center;">
+              <div style="text-align:center;opacity:.4;"><div style="font-size:.85rem;">🏠</div><div style="font-size:.37rem;color:#aaa;margin-top:1px;">Home</div></div>
+              <div style="text-align:center;opacity:.4;"><div style="font-size:.85rem;">⬜</div><div style="font-size:.37rem;color:#aaa;margin-top:1px;">Ritual</div></div>
+              <div style="text-align:center;opacity:.4;position:relative;"><div style="font-size:.85rem;">🛒</div><div style="font-size:.37rem;color:#aaa;margin-top:1px;">Tienda</div><div style="position:absolute;top:0;right:1px;width:7px;height:7px;background:#e53935;border-radius:50%;font-size:.33rem;color:#fff;display:flex;align-items:center;justify-content:center;">1</div></div>
+              <div style="text-align:center;opacity:.4;"><div style="font-size:.85rem;">👥</div><div style="font-size:.37rem;color:#aaa;margin-top:1px;">Comunidad</div></div>
+              <div style="text-align:center;"><div style="font-size:.85rem;">🎁</div><div style="font-size:.37rem;font-weight:700;color:#7e942b;margin-top:1px;">Regalos</div></div>
+            </div>
+          </div>
+        </div><!-- /phone frame -->
+      </div>
+      <div style="max-width:520px;margin:1.5rem auto 0;display:flex;flex-direction:column;gap:.5rem;">
+        <div style="background:var(--gray-light);border-radius:8px;padding:.6rem .9rem;font-size:.78rem;color:var(--dark);border:1px solid var(--border);"><strong>Banner de premios:</strong> Card nueva entre "Comparte tu enlace" y "Este mes". Fondo crema con borde top naranja para señalizar campaña. Incluye premios reales y fecha de cierre.</div>
+        <div style="background:var(--gray-light);border-radius:8px;padding:.6rem .9rem;font-size:.78rem;color:var(--dark);border:1px solid var(--border);"><strong>Posición del usuario:</strong> Si el usuario está fuera del top 10 → fila extra al final del leaderboard con fondo destacado (#f8f3ec + borde verde). Si está dentro del top 10 → su fila se destaca con el mismo tratamiento visual.</div>
+        <div style="background:var(--orange-light);border-radius:8px;padding:.6rem .9rem;font-size:.78rem;color:var(--dark);border:1px solid #f0cba8;"><strong>⚙️ Engineering (V2 — Victor):</strong> Requiere dev. Dos componentes nuevos: (1) banner de campaña configurable desde admin con fechas de activación/desactivación, (2) lógica de posición propia: query del ranking del usuario aunque esté fuera del top 10.</div>
+      </div>
+    </div>
+  </div><!-- /inapp-exp-referidos -->
+
+  <!-- ─────────────────── NOVEDADES ─────────────────── -->
+  <div id="inapp-exp-novedades" class="inapp-exp" style="display:none;">
+    <div class="card" style="margin-bottom:1rem;">
+      <h2 style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem;"><span style="color:var(--gray);font-weight:400;">📱 App →</span> 🔔 Novedades → 2 content pieces <span class="badge badge-green">✓ Sin dev</span></h2>
+      <p style="font-size:.85rem;color:var(--gray);margin-bottom:.75rem;">Publicados desde el admin panel (Surveys → Content Library). Sin desarrollo necesario.</p>
+      <div style="display:flex;flex-direction:column;gap:.5rem;font-size:.83rem;">
+        <div style="background:var(--green-light);border-radius:8px;padding:.7rem .9rem;"><strong>Pieza 1 — Publicar 8 junio</strong><br>"🎂 Cumpleaños Matcha &amp; CO — el mes de los referidos" · CTA: "Compartir mi enlace" · showInNews: true</div>
+        <div style="background:var(--green-light);border-radius:8px;padding:.7rem .9rem;"><strong>Pieza 2 — Publicar 26 junio</strong><br>"⏰ Quedan 4 días — ¿dónde estás en el ranking?" · CTA: "Ver el ranking" · showInNews: true</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-bottom:1rem;"><span style="color:var(--gray);font-weight:400;">📱 App →</span> 🔔 Novedades → Mockup visual</h2>
+      <div class="phase-pills" id="novedades-mock-pills" style="margin:-.25rem 0 1.25rem;">
+        <button class="phase-pill active" onclick="switchNovedadesMock('actual',this)">Estado actual</button>
+        <button class="phase-pill" onclick="switchNovedadesMock('campana',this)">Con campaña</button>
+      </div>
+      <div style="display:flex;justify-content:center;">
+        <!-- PHONE FRAME -->
+        <div style="width:296px;background:#e0e0e0;border-radius:44px;padding:9px;box-shadow:0 20px 56px rgba(0,0,0,.2),0 4px 12px rgba(0,0,0,.08);border:1.5px solid #ccc;">
+          <div style="background:#faf7f4;border-radius:37px;overflow:hidden;">
+            <!-- Status bar -->
+            <div style="height:24px;background:#faf7f4;display:flex;align-items:center;justify-content:space-between;padding:0 18px 0 22px;">
+              <span style="font-size:.58rem;font-weight:700;color:#333;">10:28</span>
+              <span style="font-size:.48rem;color:#555;">▐▐▐ WiFi 🔋</span>
+            </div>
+            <!-- Nav header -->
+            <div style="background:#faf7f4;padding:4px 13px 8px;display:flex;align-items:center;position:relative;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 5px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#555;font-weight:300;">‹</div>
+              <div style="position:absolute;left:50%;transform:translateX(-50%);font-size:.62rem;font-weight:700;color:#1a1a1a;">Novedades</div>
+            </div>
+            <!-- Scrollable content -->
+            <div style="overflow-y:auto;max-height:500px;min-height:500px;background:#faf7f4;">
+
+              <!-- ─── ESTADO ACTUAL ─── -->
+              <div id="novedades-mock-actual" class="novedades-mock-state" style="display:block;padding:0 8px 12px;">
+                <!-- Hero banner -->
+                <div style="border-radius:13px;overflow:hidden;background:linear-gradient(135deg,#d4956a 0%,#c4773a 100%);padding:18px 13px 16px;text-align:center;margin-bottom:8px;">
+                  <div style="font-size:1rem;margin-bottom:5px;">✦✦</div>
+                  <div style="font-size:.72rem;font-weight:800;color:#fff;margin-bottom:4px;">Novedades</div>
+                  <div style="font-size:.48rem;color:rgba(255,255,255,.8);line-height:1.5;">Descubre las últimas novedades, encuestas y contenido exclusivo</div>
+                </div>
+                <!-- Empty state -->
+                <div style="background:#fff;border-radius:13px;padding:24px 16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+                  <div style="width:44px;height:44px;border-radius:50%;background:#eef7ee;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:1.3rem;">📰</div>
+                  <div style="font-size:.6rem;font-weight:700;color:#1a1a1a;margin-bottom:5px;">No hay novedades disponibles</div>
+                  <div style="font-size:.5rem;color:#aaa;line-height:1.55;">Te avisaremos cuando haya nuevas novedades. ¡Sigue con tu ritual diario!</div>
+                </div>
+              </div>
+
+              <!-- ─── CON CAMPAÑA ─── -->
+              <div id="novedades-mock-campana" class="novedades-mock-state" style="display:none;padding:0 8px 12px;">
+                <!-- Hero banner (idéntico) -->
+                <div style="border-radius:13px;overflow:hidden;background:linear-gradient(135deg,#d4956a 0%,#c4773a 100%);padding:18px 13px 16px;text-align:center;margin-bottom:8px;">
+                  <div style="font-size:1rem;margin-bottom:5px;">✦✦</div>
+                  <div style="font-size:.72rem;font-weight:800;color:#fff;margin-bottom:4px;">Novedades</div>
+                  <div style="font-size:.48rem;color:rgba(255,255,255,.8);line-height:1.5;">Descubre las últimas novedades, encuestas y contenido exclusivo</div>
+                </div>
+                <!-- Pieza 1 -->
+                <div style="background:#fff;border-radius:13px;padding:13px;box-shadow:0 1px 4px rgba(0,0,0,.05);margin-bottom:6px;">
+                  <div style="display:flex;align-items:center;gap:5px;margin-bottom:6px;">
+                    <span style="background:#f8f3ec;border-radius:6px;font-size:.42rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#c4773a;padding:2px 6px;">🎂 Aniversario</span>
+                    <span style="font-size:.42rem;color:#ccc;">· 8 jun</span>
+                  </div>
+                  <div style="font-size:.6rem;font-weight:800;color:#1a1a1a;margin-bottom:4px;line-height:1.3;">Cumpleaños Matcha &amp; CO — el mes de los referidos</div>
+                  <div style="font-size:.49rem;color:#888;margin-bottom:10px;line-height:1.5;">Este junio celebramos nuestro aniversario contigo. Invita a tus amigos, compite en el ranking y gana premios exclusivos.</div>
+                  <div style="background:#3B4F0E;border-radius:8px;padding:7px;text-align:center;font-size:.54rem;font-weight:700;color:#fff;">Compartir mi enlace →</div>
+                </div>
+                <!-- Pieza 2 -->
+                <div style="background:#fff;border-radius:13px;padding:13px;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+                  <div style="display:flex;align-items:center;gap:5px;margin-bottom:6px;">
+                    <span style="background:#fdf0e6;border-radius:6px;font-size:.42rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#c4773a;padding:2px 6px;">⏰ Último aviso</span>
+                    <span style="font-size:.42rem;color:#ccc;">· 26 jun</span>
+                  </div>
+                  <div style="font-size:.6rem;font-weight:800;color:#1a1a1a;margin-bottom:4px;line-height:1.3;">Quedan 4 días — ¿dónde estás en el ranking?</div>
+                  <div style="font-size:.49rem;color:#888;margin-bottom:10px;line-height:1.5;">El leaderboard cierra el 30 de junio. Comprueba tu posición y haz un último push para entrar en el top 5.</div>
+                  <div style="background:#3B4F0E;border-radius:8px;padding:7px;text-align:center;font-size:.54rem;font-weight:700;color:#fff;">Ver el ranking →</div>
+                </div>
+              </div>
+
+            </div><!-- /scrollable -->
+            <!-- Bottom nav -->
+            <div style="background:#fff;border-top:1px solid #f0ede8;padding:5px 0 8px;display:flex;justify-content:space-around;align-items:center;">
+              <div style="text-align:center;opacity:.4;"><div style="font-size:.85rem;">🏠</div><div style="font-size:.37rem;color:#aaa;margin-top:1px;">Home</div></div>
+              <div style="text-align:center;opacity:.4;"><div style="font-size:.85rem;">⬜</div><div style="font-size:.37rem;color:#aaa;margin-top:1px;">Ritual</div></div>
+              <div style="text-align:center;opacity:.4;position:relative;"><div style="font-size:.85rem;">🛒</div><div style="font-size:.37rem;color:#aaa;margin-top:1px;">Tienda</div><div style="position:absolute;top:0;right:1px;width:7px;height:7px;background:#e53935;border-radius:50%;font-size:.33rem;color:#fff;display:flex;align-items:center;justify-content:center;">1</div></div>
+              <div style="text-align:center;opacity:.4;"><div style="font-size:.85rem;">👥</div><div style="font-size:.37rem;color:#aaa;margin-top:1px;">Comunidad</div></div>
+              <div style="text-align:center;opacity:.4;"><div style="font-size:.85rem;">🎁</div><div style="font-size:.37rem;color:#aaa;margin-top:1px;">Regalos</div></div>
+            </div>
+          </div>
+        </div><!-- /phone frame -->
+      </div>
+      <div style="max-width:520px;margin:1.5rem auto 0;display:flex;flex-direction:column;gap:.5rem;">
+        <div style="background:var(--gray-light);border-radius:8px;padding:.6rem .9rem;font-size:.78rem;color:var(--dark);border:1px solid var(--border);"><strong>Pieza 1 (8 jun):</strong> "🎂 Cumpleaños Matcha &amp; CO — el mes de los referidos" · CTA "Compartir mi enlace" → deep link a referidos</div>
+        <div style="background:var(--gray-light);border-radius:8px;padding:.6rem .9rem;font-size:.78rem;color:var(--dark);border:1px solid var(--border);"><strong>Pieza 2 (26 jun):</strong> "⏰ Quedan 4 días — ¿dónde estás en el ranking?" · CTA "Ver el ranking" → deep link a referidos</div>
+        <div style="background:var(--green-light);border-radius:8px;padding:.6rem .9rem;font-size:.78rem;color:var(--dark);border:1px solid #c8daa0;"><strong>✓ Sin engineering:</strong> Publicación desde admin panel (Surveys → Content Library). Activar <code>showInNews: true</code>. El diseño nativo de la card puede diferir del mockup — esto es solo referencia de contenido y CTA.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════ VICTOR ═══════════ -->
+<div class="panel" id="victor">
+  <div class="hero">
+    <h1>⚙️ Engineering Request — Victor</h1>
+    <p>Lista completa · Todo verificado contra el código · Deadline sugerido: 31 de mayo</p>
+  </div>
+
+  <div class="callout warn"><strong>Urgente:</strong> pasar este request a Victor antes del 16 de mayo.<br>
+  <small>📌 Todo lo que había "por verificar" ya está respondido mediante análisis del código fuente. Victor puede pasar directamente a implementar sin necesidad de una ronda de preguntas previa.</small></div>
+
+  <!-- ── FIXES BLOQUEANTES ── -->
+  <div class="card">
+    <h2>⚡ Fixes bloqueantes — implementar antes del lanzamiento</h2>
+    <p style="font-size:.82rem;color:var(--gray);margin-bottom:1rem;">Confirmados por análisis del código. Sin estos dos fixes, los deep links de pushes y Novedades no funcionan. Cada uno son minutos de trabajo.</p>
+
+    <div class="victor-item">
+      <div class="victor-id" style="color:#dc2626;">F1</div>
+      <div class="victor-content">
+        <div class="victor-title"><code>case 'referral'</code> falta en el router de push notifications <span class="complexity complexity-s">minutos</span></div>
+        <div class="victor-desc">
+          <div style="font-size:.8rem;color:var(--green);margin-bottom:.6rem;">🎯 <strong>Para qué:</strong> sin este fix, los 7 pushes de la campaña (R1–R5, RA2, RA3) no navegan a ningún sitio cuando el usuario los abre — el deep link cae en el default silenciosamente.</div>
+          <strong>Archivo:</strong> <code>packages/mobile/app/_layout.tsx</code><br>
+          <strong>Problema:</strong> el <code>switch (data.screen)</code> que gestiona los deep links de push tiene cases para <code>surveys</code>, <code>rewards</code>, <code>orders</code>, <code>ritual</code>, <code>shop</code>, <code>community</code> — pero no tiene <code>referral</code>. Cualquier push con <code>data.screen = 'referral'</code> (todos los pushes R1–R4 de la campaña) cae en el <code>default</code> sin navegar a ninguna pantalla.<br><br>
+          <strong>Fix:</strong> añadir dentro del switch, junto al resto de cases:<br>
+          <code>case 'referral': router.push('/referral'); break;</code>
+        </div>
+        <div class="victor-check">
+          <input type="checkbox" id="f1-done" onchange="saveCheck('f1-done')">
+          <label for="f1-done">Fix aplicado y desplegado</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="victor-item">
+      <div class="victor-id" style="color:#dc2626;">F2</div>
+      <div class="victor-content">
+        <div class="victor-title"><code>referral</code> falta en <code>DEEP_LINK_ROUTES</code> de la pantalla Novedades <span class="complexity complexity-s">minutos</span></div>
+        <div class="victor-desc">
+          <div style="font-size:.8rem;color:var(--green);margin-bottom:.6rem;">🎯 <strong>Para qué:</strong> sin este fix, los CTAs de las dos piezas de Novedades de la campaña ("Compartir mi enlace" y "Ver el ranking") no navegan al tap — la campaña in-app queda muda.</div>
+          <strong>Archivo:</strong> <code>packages/mobile/app/surveys/index.tsx</code><br>
+          <strong>Problema:</strong> el map <code>DEEP_LINK_ROUTES</code> define los destinos de los CTAs en las piezas de Novedades. Tiene entradas para <code>news</code>, <code>surveys</code>, <code>rewards</code>, <code>orders</code>, <code>ritual</code>, <code>shop</code> — pero no tiene <code>referral</code>. Las dos piezas de campaña tienen CTAs que apuntan a referral (pieza 1: "Compartir mi enlace", pieza 2: "Ver el ranking"). Sin esta entrada, el tap no navega a ningún sitio.<br><br>
+          <strong>Fix:</strong> añadir en el map <code>DEEP_LINK_ROUTES</code>:<br>
+          <code>referral: '/referral',</code>
+        </div>
+        <div class="victor-check">
+          <input type="checkbox" id="f2-done" onchange="saveCheck('f2-done')">
+          <label for="f2-done">Fix aplicado y desplegado</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONSTRUIR ── -->
+  <div class="card">
+    <h2>🔴 Construir — los dos bloques principales de la campaña</h2>
+
+    <div class="victor-item">
+      <div class="victor-id">V1</div>
+      <div class="victor-content">
+        <div class="victor-title">Home — Card slider de campaña <span class="complexity complexity-s">rápido</span></div>
+        <div class="victor-desc">
+          <div style="font-size:.8rem;color:var(--green);margin-bottom:.6rem;">🎯 <strong>Para qué:</strong> es el punto de entrada principal de la campaña en la app — lo primero que el usuario ve al abrir la home durante junio. Dirige tráfico al referral y a la oferta de aniversario.</div>
+          <strong>Pantalla:</strong> <code>packages/mobile/app/(tabs)/index.tsx</code><br>
+          <strong>Qué hacer:</strong> añadir un bloque de cards deslizables (scroll horizontal, 2 cards) justo después del header, antes del bloque de stats rápidos. El componente existe como patrón en la misma pantalla (<code>AnimatedCard</code> con <code>ScrollView horizontal</code>). Visible únicamente entre el 8 y el 30 de junio — la condición puede ser hardcoded por fechas o configurable desde admin.<br><br>
+          <strong>Card 1 — Ranking:</strong> icono 🏆 · título "Ranking de junio" · subtexto "Invita y compite — cada invitado que compre suma" · CTA → <code>router.push('/referral')</code><br>
+          <strong>Card 2 — Oferta aniversario:</strong> icono 🎂 · título "Oferta aniversario" · subtexto "Hasta 25% de descuento + botella gratis en pedidos +55€" · CTA → <code>router.push('/(tabs)/shop')</code><br><br>
+          <small style="color:var(--warm)"><strong>Plan B:</strong> si no está listo el 8 de junio, el lanzamiento sigue sin él. Activar en cuanto esté.</small>
+        </div>
+        <div class="victor-check">
+          <input type="checkbox" id="v1" onchange="saveCheck('v1')">
+          <label for="v1">Completado</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="victor-item">
+      <div class="victor-id">V2</div>
+      <div class="victor-content">
+        <div class="victor-title">Referidos — Banner de premios + posición propia en el ranking <span class="complexity complexity-s">rápido · backend + frontend</span></div>
+        <div class="victor-desc">
+          <div style="font-size:.8rem;color:var(--green);margin-bottom:.6rem;">🎯 <strong>Para qué:</strong> hace que la mecánica de competición sea visible y motivadora — el usuario sabe qué puede ganar y dónde está en el ranking. Sin esto, la pantalla de referidos de junio es idéntica a cualquier otro mes.</div>
+          <strong>Pantalla:</strong> <code>packages/mobile/app/referral/index.tsx</code><br>
+          <strong>Backend:</strong> <code>packages/backend/src/routes/referral.ts</code> — endpoint <code>GET /api/referral/monthly-stats</code><br><br>
+
+          <strong>(a) Banner de premios:</strong> añadir una card encima del bloque de leaderboard existente. Visible solo en junio. Contenido: premios del ranking (Top 1: un año de producto gratis · Top 2–5: próximo pedido gratis hasta 50€) + fecha de cierre "Termina el 30 de junio".<br><br>
+
+          <strong>(b) Posición propia del usuario:</strong> el leaderboard actual solo muestra 10 entradas y no indica dónde está el usuario si no aparece ahí. Cambios necesarios:<br>
+          — <strong>Backend:</strong> añadir al response de <code>/api/referral/monthly-stats</code> un campo <code>userRank</code> con la posición del usuario autenticado. ⚠️ Nota: el leaderboard mezcla usuarios reales con <em>community agents</em> (entradas determinísticas de la tabla <code>community_agents</code> que sirven para que el ranking nunca aparezca vacío). El rank del usuario real debe calcularse dentro de esa mezcla. Aproximación recomendada: calcular cuántos usuarios reales tienen más puntos este mes que el usuario actual + estimar posición aproximada incluyendo agents.<br>
+          — <strong>Frontend:</strong> si el usuario aparece en el top 10 → destacar su fila (fondo tintado, borde de color). Si está fuera del top 10 → añadir una fila extra al final del leaderboard con su posición y referidos del mes, visualmente separada con línea punteada.
+        </div>
+        <div class="victor-check">
+          <input type="checkbox" id="v2" onchange="saveCheck('v2')">
+          <label for="v2">Completado</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="victor-item">
+      <div class="victor-id">V3</div>
+      <div class="victor-content">
+        <div class="victor-title">RA2 + RA3 — Push automático al ganar puntos por referido <span class="complexity complexity-s">unas horas</span></div>
+        <div class="victor-desc">
+          <div style="font-size:.8rem;color:var(--green);margin-bottom:.6rem;">🎯 <strong>Para qué:</strong> habilita los únicos pushes de la campaña que se envían solos — RA2 (el referidor recibe confirmación cuando alguien acepta su invitación) y RA3 (cuando ese referido hace su primera compra). Son el momento de mayor motivación para seguir invitando.</div>
+          <strong>Problema verificado:</strong> <code>awardPoints()</code> en <code>packages/backend/src/services/points.ts</code> solo inserta en el ledger y actualiza el balance — <strong>no dispara ningún push</strong>. RA2 (referido se registra → push al referidor) y RA3 (referido compra → push al referidor) no funcionan automáticamente.<br><br>
+          <strong>Fix recomendado (más sencillo):</strong> en <code>packages/backend/src/routes/referral.ts</code>, después de las llamadas a <code>awardPoints()</code> para registro y compra, añadir una llamada directa a <code>sendPush()</code> con el token del referidor. El mensaje puede estar en los archivos de traducción o hardcoded en español para esta campaña.<br><br>
+          <strong>Nota:</strong> no existe alternativa vía journey engine — los triggers disponibles son <code>ORDER_TRIGGERS</code> (order_placed, first_purchase...) y <code>ENGAGEMENT_TRIGGERS</code> (streak, points_milestone...). No hay ningún trigger de tipo <code>referral_*</code> en el engine (verificado en <code>services/journey-engine.ts</code>). La única opción es el <code>sendPush()</code> explícito en <code>routes/referral.ts</code>.
+        </div>
+        <div class="victor-check">
+          <input type="checkbox" id="v3" onchange="saveCheck('v3')">
+          <label for="v3">Completado</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VERIFICACIONES RESUELTAS ── -->
+  <div class="card">
+    <h2>✅ Verificaciones resueltas — del código, sin preguntas pendientes</h2>
+    <p style="font-size:.82rem;color:var(--gray);margin-bottom:1rem;">Estas preguntas ya están respondidas. Se incluyen para que Victor tenga el contexto completo y pueda confirmar o corregir si algo difiere del código que ve él.</p>
+
+    <div class="victor-item">
+      <div class="victor-id" style="color:var(--gray);">VX2</div>
+      <div class="victor-content">
+        <div class="victor-title" style="color:var(--gray);">¿<code>award_points</code> dispara push automático? → <strong style="color:#dc2626;">NO</strong></div>
+        <div class="victor-desc" style="color:var(--gray);">Verificado en <code>services/points.ts</code>: <code>awardPoints()</code> solo hace insert en el ledger y upsert en el balance — ningún push. Por eso RA2/RA3 necesitan dev (ver V3 arriba).</div>
+      </div>
+    </div>
+
+    <div class="victor-item">
+      <div class="victor-id" style="color:var(--gray);">VX4</div>
+      <div class="victor-content">
+        <div class="victor-title" style="color:var(--gray);">¿Existe segmento <code>referral_count ≥ 1</code>? → <strong style="color:#dc2626;">NO</strong></div>
+        <div class="victor-desc" style="color:var(--gray);">Verificado en <code>services/push.ts</code>: los segmentos disponibles son <code>all</code>, <code>active_30d</code>, <code>has_contract</code>, <code>inactive_90d</code>, <code>high_points</code>, <code>completed_survey_&lt;id&gt;</code>. No hay ningún filtro por referral. <strong>Decisión tomada:</strong> R3 (push sprint de referral) usa segmento <code>active_30d</code>.</div>
+      </div>
+    </div>
+
+    <div class="victor-item">
+      <div class="victor-id" style="color:var(--gray);">VX5</div>
+      <div class="victor-content">
+        <div class="victor-title" style="color:var(--gray);">¿Filtros de exclusión por compra reciente e inactividad? → <strong style="color:#b45309;">PARCIAL</strong></div>
+        <div class="victor-desc" style="color:var(--gray);">Verificado en <code>services/push.ts</code>: existe <code>inactive_90d</code> (inactivos hace más de 90 días). No hay filtro por compra reciente ni por inactividad de 60 días. <strong>Decisión tomada:</strong> para T2 y T3, se usa <code>active_30d</code> como segmento base sin exclusión por compra — es el segmento más cercano disponible sin dev adicional.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── VERIFICACIÓN PENDIENTE ── -->
+  <div class="card">
+    <h2>🟡 Verificación pendiente — respuesta de Victor</h2>
+    <div class="victor-item">
+      <div class="victor-id">VX6</div>
+      <div class="victor-content">
+        <div class="victor-title">¿Los cambios de V1 y V2 requieren que el usuario actualice la app? <span class="complexity complexity-s">solo verificar</span></div>
+        <div class="victor-desc">
+          <div style="font-size:.8rem;color:var(--green);margin-bottom:.6rem;">🎯 <strong>Para qué:</strong> determina el deadline real de V1 y V2: si son OTA, Victor puede desplegar el 8 de junio mismo; si requieren App Store review, hay que entregar antes del 5 de junio para no arriesgar el lanzamiento.</div>
+          V1 (card slider en home) y V2 (banner + posición en referidos) son cambios en el frontend de la app móvil. La pregunta es si Expo OTA updates permite desplegar estos cambios sin pasar por el proceso de revisión de App Store / Google Play — es decir, sin que el usuario tenga que actualizar manualmente.<br><br>
+          <strong>Contexto:</strong> la campaña arranca el 8 de junio. Si los cambios requieren aprobación de las stores, el plazo de entrega real es más ajustado de lo que parece (Apple puede tardar 1–3 días). Si son OTA, Victor puede desplegarlo el mismo 8 de junio sin riesgo.<br><br>
+          <strong>Lo que Victor debe confirmar:</strong> (a) ¿el proyecto usa Expo OTA / EAS Update? (b) Si sí, ¿V1 y V2 son cambios elegibles para OTA (solo JS/assets) o tocan código nativo?
+        </div>
+        <div class="victor-check">
+          <input type="checkbox" id="vx6-ota" onchange="saveCheck('vx6-ota')">
+          <label for="vx6-ota">Sí, son OTA — sin actualización de usuario</label>
+          <input type="checkbox" id="vx6-store" onchange="saveCheck('vx6-store')" style="margin-left:1rem">
+          <label for="vx6-store">No, requieren release → ajustar deadline</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TIMELINE ═══════════ -->
+<div class="panel" id="timeline">
+  <div class="hero">
+    <h1>Timeline de la campaña</h1>
+    <p>Mayo 13 → Julio 7 · Hitos clave y responsables</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+    <div class="card">
+      <h2>📋 Mayo — Preparación</h2>
+      <div class="tl">
+        <div class="tl-item warn">
+          <div class="tl-date">13–16 mayo</div>
+          <div class="tl-title">Decisiones urgentes</div>
+          <div class="tl-desc">Confirmar premios y formato entrega. Decidir multiplicador ×2. Pasar engineering request a Victor.</div>
+        </div>
+        <div class="tl-item pending">
+          <div class="tl-date">19 mayo</div>
+          <div class="tl-title">Copy ES completo</div>
+          <div class="tl-desc">Todos los pushes + content pieces de Novedades en español. Enviar a traducción.</div>
+        </div>
+        <div class="tl-item pending">
+          <div class="tl-date">25 mayo</div>
+          <div class="tl-title">Traducciones listas</div>
+          <div class="tl-desc">FR, DE, EN, PT listos para entrar en admin.</div>
+        </div>
+        <div class="tl-item pending">
+          <div class="tl-date">28 mayo</div>
+          <div class="tl-title">Victor completa el home block y la pantalla de referidos</div>
+          <div class="tl-desc">Home block activo + banner de premios + posición propia en pantalla referidos.</div>
+        </div>
+        <div class="tl-item pending">
+          <div class="tl-date">31 mayo</div>
+          <div class="tl-title">Todo configurado (draft)</div>
+          <div class="tl-desc">QA con Victor. Push campaigns en admin (draft). Content pieces en Novedades (draft). Journey RA1 configurado.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🚀 Junio — Campaña activa</h2>
+      <div class="tl">
+        <div class="tl-item pending">
+          <div class="tl-date">7 junio</div>
+          <div class="tl-title">Revisión final</div>
+          <div class="tl-desc">Confirmar que todo el setup está correcto y listo para activar.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">8 junio — LANZAMIENTO</div>
+          <div class="tl-title">🎂 Campaña en vivo</div>
+          <div class="tl-desc">9:00 T1 (oferta) · Home block activo · Journey RA1 activo.</div>
+        </div>
+        <div class="tl-item pending">
+          <div class="tl-date">9 junio</div>
+          <div class="tl-title">Push referral + Novedades</div>
+          <div class="tl-desc">10:00 R1 (referral) + Publicar Pieza 1 en Novedades.</div>
+        </div>
+        <div class="tl-item pending">
+          <div class="tl-date">17–18 junio</div>
+          <div class="tl-title">Mid-campaign</div>
+          <div class="tl-desc">Push R2 (referral) + Push T2 (oferta inactivos).</div>
+        </div>
+        <div class="tl-item pending">
+          <div class="tl-date">26 junio</div>
+          <div class="tl-title">Sprint final</div>
+          <div class="tl-desc">Push R3 + Novedades pieza 2.</div>
+        </div>
+        <div class="tl-item pending">
+          <div class="tl-date">29 junio</div>
+          <div class="tl-title">Cierre</div>
+          <div class="tl-desc">Push T3 + Push R4 (opcional). Último día para referidos y oferta.</div>
+        </div>
+        <div class="tl-item pending">
+          <div class="tl-date">30 junio — CIERRE</div>
+          <div class="tl-title">Snapshot leaderboard</div>
+          <div class="tl-desc">Capturar top 5 definitivo. Desactivar journey RA1.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🏆 Julio — Post-campaña</h2>
+    <div class="tl">
+      <div class="tl-item pending">
+        <div class="tl-date">1 julio</div>
+        <div class="tl-title">Comunicar ganadores · Desactivar home block</div>
+        <div class="tl-desc">Push + Novedades con el top 5 definitivo y los premios. Desactivar home campaign block.</div>
+      </div>
+      <div class="tl-item pending">
+        <div class="tl-date">1–7 julio</div>
+        <div class="tl-title">Entregar premios</div>
+        <div class="tl-desc">Gestionar Top 1 (año de producto) y Top 2–5 (próximo pedido gratis) según formato definido.</div>
+      </div>
+      <div class="tl-item pending">
+        <div class="tl-date">7 julio</div>
+        <div class="tl-title">Cierre total</div>
+        <div class="tl-desc">Retrospectiva de la campaña.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ CHECKLIST ═══════════ -->
+<div class="panel" id="checklist">
+  <div class="hero">
+    <h1>✅ Checklist de lanzamiento</h1>
+    <p>Todo lo que debe estar listo antes del 8 de junio · El estado se guarda automáticamente</p>
+  </div>
+
+  <div class="card">
+    <h2>⚡ Decisiones · <span style="color:var(--warm)">Pablo</span> (antes del 16 mayo)</h2>
+    <ul class="checklist" id="cl-decisions">
+      <li>
+        <input type="checkbox" id="c1" onchange="saveCheck('c1')">
+        <div>
+          <div class="check-label">Confirmar premios del leaderboard</div>
+          <div class="check-sub">Formato de entrega Top 1 (año de producto, ~180€) y Top 2–5 (próximo pedido gratis hasta 50€ — alternativa a gift card si no aplica en app). Decidir si añadir tier Top 6–10 (opcional)</div>
+        </div>
+      </li>
+      <li>
+        <input type="checkbox" id="c2" onchange="saveCheck('c2')">
+        <div>
+          <div class="check-label">Decidir si se activa multiplicador ×2 puntos referidos</div>
+          <div class="check-sub">Si sí → pedirlo a Victor como parte del engineering request (1–2 días de desarrollo)</div>
+        </div>
+      </li>
+      <li>
+        <input type="checkbox" id="c3" onchange="saveCheck('c3')">
+        <div>
+          <div class="check-label">Pasar engineering request a Victor (home block + pantalla referidos + preguntas de verificación)</div>
+          <div class="check-sub">Deadline Victor para completarlo: 28–31 mayo</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>⚙️ Engineering · <span style="color:var(--warm)">Victor</span> (antes del 31 mayo)</h2>
+    <ul class="checklist">
+      <li>
+        <input type="checkbox" id="c4" onchange="saveCheck('c4')">
+        <div>
+          <div class="check-label">Home campaign block en staging y aprobado</div>
+        </div>
+      </li>
+      <li>
+        <input type="checkbox" id="c5" onchange="saveCheck('c5')">
+        <div>
+          <div class="check-label">Banner premios + posición propia en pantalla referidos en staging y aprobado</div>
+        </div>
+      </li>
+      <li>
+        <input type="checkbox" id="c6" onchange="saveCheck('c6')">
+        <div>
+          <div class="check-label">Deep link a pantalla de referidos verificado con Victor (o añadido si falta)</div>
+        </div>
+      </li>
+      <li>
+        <input type="checkbox" id="c7" onchange="saveCheck('c7')">
+        <div>
+          <div class="check-label">V3 implementado: sendPush() añadido en routes/referral.ts tras awardPoints() (afecta a RA2 y RA3) — VX2 confirmado, NO hay push automático</div>
+        </div>
+      </li>
+      <li>
+        <input type="checkbox" id="c8" onchange="saveCheck('c8')">
+        <div>
+          <div class="check-label">VX6 respondido: confirmar con Victor si V1/V2 son OTA (sin actualización de usuario) o requieren release en App Store</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>✍️ Contenido · <span style="color:var(--warm)">Pablo + Jaime</span> (copy: 19 mayo · traducciones: 25 mayo)</h2>
+    <ul class="checklist">
+      <li>
+        <input type="checkbox" id="c9" onchange="saveCheck('c9')">
+        <div>
+          <div class="check-label">Copy ES completo (pushes R1-R4, RA1-RA3, T1-T3 + 2 piezas Novedades)</div>
+        </div>
+      </li>
+      <li>
+        <input type="checkbox" id="c10" onchange="saveCheck('c10')">
+        <div>
+          <div class="check-label">Traducciones FR, DE, EN, PT listas y en el admin</div>
+        </div>
+      </li>
+      <li>
+        <input type="checkbox" id="c11" onchange="saveCheck('c11')">
+        <div>
+          <div class="check-label">Imagen de campaña de aniversario creada (para pieza 1 de Novedades)</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ Setup en admin · <span style="color:var(--warm)">Pablo</span> (antes del 31 mayo)</h2>
+    <ul class="checklist">
+      <li>
+        <input type="checkbox" id="c12" onchange="saveCheck('c12')">
+        <div>
+          <div class="check-label">Push campaigns R1, R2, R3, R4 configurados (draft, sin enviar)</div>
+        </div>
+      </li>
+      <li>
+        <input type="checkbox" id="c13" onchange="saveCheck('c13')">
+        <div>
+          <div class="check-label">Push campaigns T1, T2, T3 configurados (draft, sin enviar)</div>
+        </div>
+      </li>
+      <li>
+        <input type="checkbox" id="c14" onchange="saveCheck('c14')">
+        <div>
+          <div class="check-label">Journey RA1 (post-compra → nudge referral) configurado en admin (draft, sin activar)</div>
+        </div>
+      </li>
+      <li>
+        <input type="checkbox" id="c15" onchange="saveCheck('c15')">
+        <div>
+          <div class="check-label">Content pieces Novedades (pieza 1 y pieza 2) creados en admin (draft, sin publicar)</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🔍 Revisión final · <span style="color:var(--warm)">Pablo</span> (7 junio)</h2>
+    <ul class="checklist">
+      <li>
+        <input type="checkbox" id="c16" onchange="saveCheck('c16')">
+        <div>
+          <div class="check-label">Revisar todos los push campaigns en admin — fechas, segmentos y copy correctos</div>
+        </div>
+      </li>
+      <li>
+        <input type="checkbox" id="c17" onchange="saveCheck('c17')">
+        <div>
+          <div class="check-label">Verificar que el home block está listo para activar el 8 de junio</div>
+        </div>
+      </li>
+      <li>
+        <input type="checkbox" id="c18" onchange="saveCheck('c18')">
+        <div>
+          <div class="check-label">Test end-to-end del deep link de referidos en iOS y Android</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div id="progress-bar-container" style="margin-top:1rem;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:.5rem;">
+      <span style="font-size:.85rem;font-weight:600;color:var(--green)">Progreso general</span>
+      <span id="progress-text" style="font-size:.85rem;color:var(--gray)">0 / 18 completados</span>
+    </div>
+    <div style="background:var(--border);border-radius:20px;height:8px;overflow:hidden;">
+      <div id="progress-fill" style="background:var(--green);height:100%;border-radius:20px;width:0%;transition:width .4s;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // NAV
+  function showPanel(id) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // PHASE TABS
+  function showPhase(id, group) {
+    document.querySelectorAll('.phase-content').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.phase-pill').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // COPY TO CLIPBOARD
+  var currentLang = 'es';
+
+  const pushCopy = {
+    r1: {
+      es: "TÍTULO: 🎂 Aniversario · Este mes los referidos tienen premio\nCUERPO: Top 5 usuarios que más inviten ganan: el primero un año de producto gratis, el resto el próximo pedido gratis.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      fr: "TITRE : 🎂 Anniversaire · Ce mois, parrainer rapporte des cadeaux\nCORPS : Les 5 meilleurs parrains gagnent : 1ère place un an de produit offert, 2e–5e leur prochaine commande offerte.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      de: "TITEL: 🎂 Jubiläum · Diesen Monat werden Empfehlungen belohnt\nKÖRPER: Die Top 5 gewinnen: Platz 1 ein Jahr Produkt gratis, Platz 2–5 die nächste Bestellung gratis.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      en: "TITLE: 🎂 Anniversary · This month, referrals come with rewards\nBODY: The top 5 referrers win prizes — 1st place gets a year's products free, 2nd–5th get their next order free.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      pt: "TÍTULO: 🎂 Aniversário · Este mês, os convites têm prémio\nCORPO: Os 5 utilizadores que mais convidarem ganham: o 1.º um ano de produto grátis, o 2.º–5.º o próximo pedido grátis.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)"
+    },
+    r2: {
+      es: "TÍTULO: ¿Has visto el ranking de junio?\nCUERPO: Quedan 13 días. Los 5 primeros ganan premios exclusivos. ¿Dónde estás?\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      fr: "TITRE : Tu as vu le classement de juin ?\nCORPS : Il reste 13 jours. Les 5 premiers gagnent des lots exclusifs. Et toi, t'es où ?\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      de: "TITEL: Hast du das Juni-Ranking schon gesehen?\nKÖRPER: Noch 13 Tage. Die Top 5 gewinnen exklusive Preise. Wo stehst du?\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      en: "TITLE: Have you seen the June rankings?\nBODY: 13 days left. The top 5 win exclusive prizes. Where do you stand?\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      pt: "TÍTULO: Já viste o ranking de junho?\nCORPO: Faltam 13 dias. Os 5 primeiros ganham prémios exclusivos. Onde estás?\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)"
+    },
+    r3: {
+      es: "TÍTULO: 4 días para cerrar el ranking de junio\nCUERPO: Quedan 4 días. Un referido que compre te sube en el ranking. Comparte tu enlace.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      fr: "TITRE : Plus que 4 jours pour le classement de juin\nCORPS : 4 jours. Un filleul qui achète te fait monter. Partage ton lien maintenant.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      de: "TITEL: Noch 4 Tage für das Juni-Ranking\nKÖRPER: Noch 4 Tage. Jede erfolgreiche Empfehlung bringt dich nach oben. Teile deinen Link.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      en: "TITLE: 4 days left to close the June rankings\nBODY: 4 days to go. A referral who buys moves you up the leaderboard. Share your link.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      pt: "TÍTULO: 4 dias para fechar o ranking de junho\nCORPO: Faltam 4 dias. Um convite que resulte em compra sobe-te no ranking. Partilha o teu link.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)"
+    },
+    r4: {
+      es: "TÍTULO: Mañana cierra el ranking\nCUERPO: Última oportunidad para entrar en el top 5 de junio.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      fr: "TITRE : Le classement ferme demain\nCORPS : Dernière chance d'entrer dans le top 5 de juin.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      de: "TITEL: Das Ranking schließt morgen\nKÖRPER: Letzte Chance für einen Platz in den Top 5.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      en: "TITLE: The rankings close tomorrow\nBODY: Last chance to make the June top 5.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      pt: "TÍTULO: O ranking fecha amanhã\nCORPO: Última oportunidade para entrar no top 5 de junho.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)"
+    },
+    ra1: {
+      es: "TÍTULO: Tu pedido está en camino 🎂\nCUERPO: ¿Se lo cuentas a alguien? En junio, cada referido compite por el ranking.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      fr: "TITRE : Ta commande est en route 🎂\nCORPS : Tu en parles à quelqu'un ? En juin, chaque parrainage compte dans le classement.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      de: "TITEL: Deine Bestellung ist unterwegs 🎂\nKÖRPER: Erzählst du's jemandem weiter? Im Juni zählt jede Empfehlung für das Ranking.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      en: "TITLE: Your order is on its way 🎂\nBODY: Why not tell someone? This June, every referral counts towards the rankings.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      pt: "TÍTULO: A tua encomenda está a caminho 🎂\nCORPO: Contas a alguém? Em junho, cada convite compete no ranking.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)"
+    },
+    ra2: {
+      es: "TÍTULO: Alguien se ha unido gracias a ti\nCUERPO: +50 pts. Si hace su primera compra, ganas 150 pts más.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      fr: "TITRE : Quelqu'un vient de te rejoindre\nCORPS : +50 pts. S'il passe sa première commande, tu gagnes encore 150 pts.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      de: "TITEL: Jemand ist dank dir dabei\nKÖRPER: +50 Punkte. Wenn er bestellt, bekommst du weitere 150 Punkte.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      en: "TITLE: Someone just joined thanks to you\nBODY: +50 pts. If they place their first order, you earn another 150 pts.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      pt: "TÍTULO: Alguém acaba de se juntar graças a ti\nCORPO: +50 pts. Se fizer a primeira compra, ganhas mais 150 pts.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)"
+    },
+    ra3: {
+      es: "TÍTULO: 🎉 ¡Tu invitado/a ha comprado!\nCUERPO: +150 pts para ti. Mira cómo vas en el ranking.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      fr: "TITRE : 🎉 Ton filleul vient d'acheter !\nCORPS : +150 pts pour toi. Regarde où tu en es dans le classement.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      de: "TITEL: 🎉 Deine Empfehlung hat eingekauft!\nKÖRPER: +150 Punkte für dich. Schau, wo du im Ranking stehst.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      en: "TITLE: 🎉 Your referral has made a purchase!\nBODY: +150 pts for you. See how you're doing in the rankings.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)",
+      pt: "TÍTULO: 🎉 O teu convidado comprou!\nCORPO: +150 pts para ti. Vê como estás no ranking.\nDEEP LINK: /referral — requiere fix F1 (_layout.tsx)"
+    },
+    t1: {
+      es: "TÍTULO: 🎂 ¡Feliz aniversario, Matcha & CO!\nCUERPO: Hasta 25% de descuento + botella térmica gratis en pedidos +55 €. Solo en junio.\nDEEP LINK: screen=shop",
+      fr: "TITRE : 🎂 Bon anniversaire, Matcha & CO !\nCORPS : Jusqu'à 25 % de réduction + gourde thermique offerte dès 55 €. Seulement en juin.\nDEEP LINK: screen=shop",
+      de: "TITEL: 🎂 Alles Gute zum Jubiläum, Matcha & CO!\nKÖRPER: Bis zu 25 % Rabatt + Thermosflasche gratis ab 55 €. Nur im Juni.\nDEEP LINK: screen=shop",
+      en: "TITLE: 🎂 Happy anniversary, Matcha & CO!\nBODY: Up to 25% off + a free thermal bottle on orders over £55. This June only.\nDEEP LINK: screen=shop",
+      pt: "TÍTULO: 🎂 Feliz aniversário, Matcha & CO!\nCORPO: Até 25% de desconto + garrafa térmica grátis em encomendas acima de 55 €. Só em junho.\nDEEP LINK: screen=shop"
+    },
+    t2: {
+      es: "TÍTULO: ¿Aún no has aprovechado el aniversario?\nCUERPO: 20% en cualquier pedido. 25% en +45 €. Termina el 30 de junio.\nDEEP LINK: screen=shop",
+      fr: "TITRE : Tu n'as pas encore profité de l'anniversaire ?\nCORPS : 20 % sur toute commande. 25 % dès 45 €. Offre valable jusqu'au 30 juin.\nDEEP LINK: screen=shop",
+      de: "TITEL: Den Jubiläumsrabatt noch nicht genutzt?\nKÖRPER: 20 % auf alles. 25 % ab 45 €. Nur bis 30. Juni.\nDEEP LINK: screen=shop",
+      en: "TITLE: Not made the most of our anniversary yet?\nBODY: 20% off everything. 25% on orders over £45. Ends 30th June.\nDEEP LINK: screen=shop",
+      pt: "TÍTULO: Ainda não aproveitaste o aniversário?\nCORPO: 20% em qualquer encomenda. 25% acima de 45 €. Termina a 30 de junho.\nDEEP LINK: screen=shop"
+    },
+    t3: {
+      es: "TÍTULO: Mañana termina el aniversario\nCUERPO: Último día para el 25% + botella gratis. ¿Qué llevas tiempo queriendo pedir?\nDEEP LINK: screen=shop",
+      fr: "TITRE : L'anniversaire se termine demain\nCORPS : Dernier jour pour le 25 % + gourde offerte. Tu avais repéré quelque chose ?\nDEEP LINK: screen=shop",
+      de: "TITEL: Der Jubiläums-Deal endet morgen\nKÖRPER: Letzter Tag für 25 % + gratis Thermosflasche. Was wolltest du dir schon lange gönnen?\nDEEP LINK: screen=shop",
+      en: "TITLE: The anniversary offer ends tomorrow\nBODY: Last day for 25% off + a free bottle. What have you had your eye on?\nDEEP LINK: screen=shop",
+      pt: "TÍTULO: O aniversário termina amanhã\nCORPO: Último dia para o 25% + garrafa grátis. O que andas a querer encomendar há algum tempo?\nDEEP LINK: screen=shop"
+    }
+  };
+
+  function setLang(lang) {
+    currentLang = lang;
+    // Actualizar pills
+    document.querySelectorAll('.lang-pill').forEach(p => p.classList.remove('active'));
+    event.target.classList.add('active');
+    // Mostrar/ocultar nota UK
+    document.getElementById('lang-uk-note').style.display = (lang === 'en') ? 'inline' : 'none';
+    // Actualizar texto visible en todas las push cards
+    document.querySelectorAll('.push-body[data-title-es]').forEach(function(card) {
+      var title = card.getAttribute('data-title-' + lang) || card.getAttribute('data-title-es');
+      var body  = card.getAttribute('data-body-'  + lang) || card.getAttribute('data-body-es');
+      card.querySelector('.push-title').textContent = title;
+      card.querySelector('.push-text').textContent  = body;
+    });
+  }
+
+  function copyField(id, field, btn) {
+    var card = document.getElementById('copy-' + id);
+    var text = field === 'title'
+      ? (card.getAttribute('data-title-' + currentLang) || card.getAttribute('data-title-es'))
+      : (card.getAttribute('data-body-'  + currentLang) || card.getAttribute('data-body-es'));
+    navigator.clipboard.writeText(text).then(function() {
+      var orig = btn.textContent;
+      btn.textContent = '✓';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
+    });
+  }
+
+  function initCopyButtons() {
+    document.querySelectorAll('.push-body[data-title-es]').forEach(function(card) {
+      var id = card.id.replace('copy-', '');
+
+      // Wrap título con botón inline
+      var titleEl = card.querySelector('.push-title');
+      var titleRow = document.createElement('div');
+      titleRow.className = 'push-field-row';
+      titleEl.parentNode.insertBefore(titleRow, titleEl);
+      titleRow.appendChild(titleEl);
+      var titleBtn = document.createElement('button');
+      titleBtn.className = 'copy-field-btn';
+      titleBtn.textContent = 'Copiar';
+      titleBtn.addEventListener('click', function() { copyField(id, 'title', this); });
+      titleRow.appendChild(titleBtn);
+
+      // Wrap cuerpo con botón inline
+      var bodyEl = card.querySelector('.push-text');
+      var bodyRow = document.createElement('div');
+      bodyRow.className = 'push-field-row';
+      bodyEl.parentNode.insertBefore(bodyRow, bodyEl);
+      bodyRow.appendChild(bodyEl);
+      var bodyBtn = document.createElement('button');
+      bodyBtn.className = 'copy-field-btn';
+      bodyBtn.textContent = 'Copiar';
+      bodyBtn.addEventListener('click', function() { copyField(id, 'body', this); });
+      bodyRow.appendChild(bodyBtn);
+
+      // Eliminar el botón de footer "Copiar copy" ya que los inline lo reemplazan
+      var footerBtn = card.parentNode.querySelector('.push-footer .copy-btn');
+      if (footerBtn) footerBtn.remove();
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initCopyButtons);
+
+  // PUSH META BULLETS
+  function initPushMeta() {
+    document.querySelectorAll('.push-body[data-segment]').forEach(function(card) {
+      var segment  = card.getAttribute('data-segment');
+      var deeplink = card.getAttribute('data-deeplink-label');
+
+      var info = document.createElement('div');
+      info.className = 'push-meta-info';
+
+      var ul = document.createElement('ul');
+
+      var liSeg = document.createElement('li');
+      var segLabel = document.createElement('span');
+      segLabel.className = 'meta-label';
+      segLabel.textContent = 'Segmento';
+      var segText = document.createElement('span');
+      // Mark ⚠️ parts in orange
+      segText.innerHTML = segment.replace(/(⚠️[^·]+)/g, '<span class="meta-warn">$1</span>');
+      liSeg.appendChild(segLabel);
+      liSeg.appendChild(segText);
+      ul.appendChild(liSeg);
+
+      var liDl = document.createElement('li');
+      var dlLabel = document.createElement('span');
+      dlLabel.className = 'meta-label';
+      dlLabel.textContent = 'Pantalla';
+      var dlText = document.createElement('span');
+      dlText.textContent = deeplink;
+      liDl.appendChild(dlLabel);
+      liDl.appendChild(dlText);
+      ul.appendChild(liDl);
+
+      info.appendChild(ul);
+      // Insert after the push-body div
+      card.parentNode.insertBefore(info, card.nextSibling);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initPushMeta);
+
+  // CHECKLIST PERSISTENCE
+  function saveCheck(id) {
+    const el = document.getElementById(id);
+    if (el) localStorage.setItem('check_' + id, el.checked);
+    updateProgress();
+  }
+
+  function loadChecks() {
+    document.querySelectorAll('input[type=checkbox]').forEach(cb => {
+      const saved = localStorage.getItem('check_' + cb.id);
+      if (saved === 'true') cb.checked = true;
+    });
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const all = document.querySelectorAll('#checklist input[type=checkbox]').length;
+    // only count the main checklist items (c1-c18)
+    let done = 0;
+    for (let i = 1; i <= 18; i++) {
+      const el = document.getElementById('c' + i);
+      if (el && el.checked) done++;
+    }
+    const total = 18;
+    document.getElementById('progress-text').textContent = done + ' / ' + total + ' completados';
+    document.getElementById('progress-fill').style.width = (done / total * 100) + '%';
+  }
+
+  loadChecks();
+
+  // TIMELINE TOGGLE
+  function initTimeline() {
+    document.querySelectorAll('.tl-item').forEach(function(item, i) {
+      item.dataset.tlId = 'tl-' + i;
+      item.dataset.origState = item.classList.contains('warn') ? 'warn'
+                             : item.classList.contains('pending') ? 'pending' : 'default';
+
+      // Inject done badge inside tl-title (created lazily on first access)
+      var titleEl = item.querySelector('.tl-title');
+      if (titleEl) {
+        var badge = document.createElement('span');
+        badge.className = 'tl-done-badge';
+        badge.textContent = '✓ Hecho';
+        titleEl.appendChild(badge);
+      }
+
+      // Restore saved state
+      if (localStorage.getItem('tl_tl-' + i) === 'done') {
+        item.classList.remove('pending', 'warn');
+        item.classList.add('tl-done');
+        item.title = 'Completado · Clic para deshacer';
+      } else {
+        item.title = 'Clic para marcar como completado';
+      }
+
+      item.addEventListener('click', function() { toggleTimeline(item); });
+    });
+  }
+
+  function toggleTimeline(item) {
+    var key = 'tl_' + item.dataset.tlId;
+    if (item.classList.contains('tl-done')) {
+      item.classList.remove('tl-done');
+      var orig = item.dataset.origState;
+      if (orig === 'warn') item.classList.add('warn');
+      else if (orig === 'pending') item.classList.add('pending');
+      item.title = 'Clic para marcar como completado';
+      localStorage.removeItem(key);
+    } else {
+      item.classList.remove('pending', 'warn');
+      item.classList.add('tl-done');
+      item.title = 'Completado · Clic para deshacer';
+      localStorage.setItem(key, 'done');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', initTimeline);
+
+  // MOCKUP STATE SWITCHER
+  function switchHomeMock(state, btn) {
+    document.querySelectorAll('.home-mock-state').forEach(function(el) { el.style.display = 'none'; });
+    document.getElementById('home-mock-' + state).style.display = 'block';
+    document.querySelectorAll('#home-mock-pills .phase-pill').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+
+  // NOVEDADES MOCKUP SWITCHER
+  function switchNovedadesMock(state, btn) {
+    document.querySelectorAll('.novedades-mock-state').forEach(function(el) { el.style.display = 'none'; });
+    document.getElementById('novedades-mock-' + state).style.display = 'block';
+    document.querySelectorAll('#novedades-mock-pills .phase-pill').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+
+  // REFERIDOS MOCKUP SWITCHER
+  function switchReferidosMock(state, btn) {
+    document.querySelectorAll('.referidos-mock-state').forEach(function(el) { el.style.display = 'none'; });
+    document.getElementById('referidos-mock-' + state).style.display = 'block';
+    document.querySelectorAll('#referidos-mock-pills .phase-pill').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+
+  // IN-APP EXPERIENCE TAB SWITCHER
+  function switchInappExp(exp, btn) {
+    document.querySelectorAll('.inapp-exp').forEach(function(el) { el.style.display = 'none'; });
+    document.getElementById('inapp-exp-' + exp).style.display = 'block';
+    document.querySelectorAll('#inapp-exp-pills .phase-pill').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
